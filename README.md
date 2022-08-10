@@ -4,7 +4,7 @@ Our frontend server the part which you view when visiting our site
 
 ## Plan
 
-- [ ] Create React App
+- [x] Create React App
 
 - [ ] Home, signup, signin
 
