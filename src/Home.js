@@ -73,10 +73,7 @@ return (
 <a className="text-decoration-none" style={{"marginLeft": "3%"}} href="https://github.com/curiopost" target={"_blank"}>GitHub</a>
 <a className="text-decoration-none" style={{"marginLeft": "3%"}} href="https://discord.gg/NzBQm9MfkE" target={"_blank"}>Discord</a>
 <a className="text-decoration-none" style={{"marginLeft": "3%"}} href="https://www.youtube.com/channel/UCsA-SIwx157a3WqAC0wAOVA" target={"_blank"}>YouTube</a>
-<ul class="nav col-md-7 justify-content-end list-unstyled d-flex">
-      <li className="ms-4 text-decoration-none"><a className="text-muted text-decoration-none">&copy; {new Date().getFullYear()} Curiopost. Icons from Flaticon</a></li>
 
-    </ul>
     </div>
 
    
