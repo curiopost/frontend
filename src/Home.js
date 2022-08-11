@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom"
+import "./home.css"
 
 export default function Home() {
 document.title = "Curiopost"
@@ -58,26 +59,49 @@ return (
         <p>Got any bussiness where you want to post announcements? Or just share about it? Curiopost is your go to solution for doing any of those kinds of things!</p></div>
     
     </div>
-    <div class="mt-4 p-5 bg-dark text-white rounded" style={{"marginBottom": "20%"}}>
+    <div className="mt-4 p-5 bg-dark text-white rounded" style={{"marginBottom": "20%"}}>
         <h1>Ready to try Curiopost?</h1>
         <p>Create posts, questions, share memes, opinions, find users and more, all in just one platform.</p>
         <Link to="/register" className="btn btn-outline-light">Create a free account</Link>
         </div>
-
+        <footer className=" py-3 my-4 border-top ">
+  
+  <div className="row">
+  <div className="col-sm-1">
+<h5 className="text-muted">Socials</h5>
+   <a href="https://twitter.com/curiopost" className="text-decoration-none " target={"_blank"}>Twitter</a><br/>
+      <a href="https://github.com/curiopost" className="text-decoration-none" target={"_blank"}>GitHub</a><br/>
+      <a href="https://www.youtube.com/channel/UCsA-SIwx157a3WqAC0wAOVA" className="text-decoration-none" target={"_blank"}>YouTube</a><br/>
+      <a href="https://discord.gg/NzBQm9MfkE" className="text-decoration-none" target={"_blank"}>Discord</a>
+  </div>
+  <div className="col-sm-1">
+<h5 className="text-muted">Contact</h5>
+   <a href="mailto:curiopost.live@outlook.com" className="text-decoration-none" >Email</a><br/>
+      
+  </div>
+  <div className="col-sm-1 ">
+<h5 className="text-muted">Account</h5>
+  <Link to="/register" className="text-decoration-none" >Register</Link><br/>
+  <Link to="/login" className="text-decoration-none" >Login</Link><br/>
+      
+  </div>
+  <div className="col-sm-1 ">
+  <h5 className="text-muted">Legal</h5>
+  <Link to="/privacy" className="text-decoration-none" >Privacy</Link><br/>
+  <Link to="terms" className="text-decoration-none" >Terms</Link><br/>
+  </div>
+  <div className="col-sm-1 ">
+  <h5 className="text-muted">Credits</h5>
+  <a href="https://www.flaticon.com/" className="text-decoration-none" target={"_blank"}>Flaticon</a><br/>
+    </div>
+    <div className="col ">
+    <p className="text-muted">Copyright &copy; {new Date().getFullYear()} Curiopost.</p>
+    </div>
+  </div>
+ </footer>
 
         </div>
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-  
-        <a className="text-decoration-none" style={{"marginLeft": "5%"}} href="https://twitter.com/curiopost" target={"_blank"}>Twitter</a>
-<a className="text-decoration-none" style={{"marginLeft": "3%"}} href="https://github.com/curiopost" target={"_blank"}>GitHub</a>
-<a className="text-decoration-none" style={{"marginLeft": "3%"}} href="https://discord.gg/NzBQm9MfkE" target={"_blank"}>Discord</a>
-<a className="text-decoration-none" style={{"marginLeft": "3%"}} href="https://www.youtube.com/channel/UCsA-SIwx157a3WqAC0wAOVA" target={"_blank"}>YouTube</a>
-
-    </div>
-
-   
-  </footer>
+        
     </div>
 )
 
