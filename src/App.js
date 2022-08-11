@@ -1,22 +1,26 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Feeds from "./loggedInHomePage"
 import Home from "./Home"
-import isLoggedIn from "./functions/isLoggedin";
+import Redirector from "./functions/redirector"
+import Login from "./login"
 
-export default function App() {
 
-    const hasUserLoggedIn = isLoggedIn()
 
+function App() {
 
 return(
     <BrowserRouter>
     <Routes>
-    <Route path="/" element={hasUserLoggedIn.loggedIn ? <Feeds/>: <Home/>} />
+    <Route path="/" element={<Home/>} />
+    <Route path="/login" element={<Login /> }/>
     </Routes>
     </BrowserRouter>
 )
 
+
 }
+
+export default App
 
 
 

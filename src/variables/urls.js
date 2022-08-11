@@ -1,5 +1,6 @@
 const  urls = {
-    backend: 'https://backend.curiopost.live',
-    frontend: 'https://curiopost.live',
-    cdn: 'https://cdn.curiopost.live'
+    backend: 'http://localhost:6060',
+    cdn: 'http://localhost:8070'
 }
+
+export default urls
