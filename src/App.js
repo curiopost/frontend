@@ -3,6 +3,7 @@ import Feeds from "./loggedInHomePage"
 import Home from "./Home"
 import Redirector from "./functions/redirector"
 import Login from "./login"
+import Logout from "./logout";
 
 
 
@@ -13,6 +14,7 @@ return(
     <Routes>
     <Route path="/" element={<Home/>} />
     <Route path="/login" element={<Login /> }/>
+    <Route path="/logout" element={<Logout /> }/>
     </Routes>
     </BrowserRouter>
 )

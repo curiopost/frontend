@@ -1,28 +1,22 @@
 import React from "react";
-import {Link} from "react-router-dom"
 import "./home.css"
 import Feeds from "./loggedInHomePage"
 import About from "./about"
 import urls from "./variables/urls"
-import { useState } from "react";
-
-
-
-
-
-  
-
+import { useState, useEffect} from "react";
 
 export default  function Home() {
 
   const [response, setResponse] = useState('')
-  const [count, setCount] = useState(0)
 
-
+  useEffect(() => {
+    
   const getResponse = async() => {
     const token = window.localStorage.getItem("token")
 
+
   if(!token) {
+   
     const resp = {success: false, message: "Token is expired or invalid.", code: 401}
     setResponse(resp)
   }
@@ -50,9 +44,12 @@ export default  function Home() {
   }
   }
 
-  if(response === '') {
-    getResponse()
-  }
+ getResponse()
+
+  }, [])
+
+
+
 
    
 
