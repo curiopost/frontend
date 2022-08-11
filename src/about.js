@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 import "./home.css"
 
 export default function About() {
-    document.title = "Curiopost"
+    document.title = "Home / Curiopost"
 
 return (
     <div>
