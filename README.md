@@ -6,7 +6,7 @@ Our frontend server the part which you view when visiting our site
 
 - [x] Create React App
 
-- [ ] Home, signup, signin
+- [x] Home, signup, signin
 
 - [ ] Feeds Page
 
