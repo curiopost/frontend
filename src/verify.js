@@ -10,7 +10,7 @@ export default function Verify() {
           
             
             if(!token) {
-                document.getElementById("verifystat").innerText = `Error: Invalid verification token.`
+                return document.getElementById("verifystat").innerText = `Error: Invalid verification token.`
             }
 
             const getrsp = await fetch(urls.backend+`/api/auth/verify?token=${token}`, {
