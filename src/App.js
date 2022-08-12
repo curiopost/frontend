@@ -3,6 +3,7 @@ import Home from "./Home"
 import Login from "./login"
 import Logout from "./logout";
 import Register from "./Register"
+import Verify from "./verify"
 
 
 
@@ -15,6 +16,7 @@ return(
     <Route path="/login" element={<Login /> }/>
     <Route path="/logout" element={<Logout /> }/>
     <Route path="/register" element={<Register/>}/>
+    <Route path="/verify" element={<Verify/>}/>
     </Routes>
     </BrowserRouter>
 )
