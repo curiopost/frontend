@@ -37,7 +37,7 @@ return (
         </nav>
 
         <div className="container">
-            <img src="/logo.png" className="rounded" style={{"marginTop": "15%", }} alt="logo" width="50" height="50"/>
+            <img src={process.env.PUBLIC_URL+"/logo.png"}  className="rounded" style={{"marginTop": "15%", }} alt="logo" width="50" height="50"/>
             <h1 className="text-dark text-left" >The social media platform you didn't want, <br/>but what you needed... </h1>
             <p>Create posts, questions, share memes, opinions, find users and more, all in just one platform.</p>
   <Link to="/register" className="btn btn-outline-dark" style={{"marginBottom": "25%"}}>Create a free account</Link>
