@@ -4,6 +4,7 @@ import Home from "./Home"
 import Redirector from "./functions/redirector"
 import Login from "./login"
 import Logout from "./logout";
+import Register from "./Register"
 
 
 
@@ -15,6 +16,7 @@ return(
     <Route path="/" element={<Home/>} />
     <Route path="/login" element={<Login /> }/>
     <Route path="/logout" element={<Logout /> }/>
+    <Route path="/register" element={<Register/>}/>
     </Routes>
     </BrowserRouter>
 )

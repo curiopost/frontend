@@ -1,9 +1,11 @@
-import LoginPage from "./loginPage"
+import RegisterPage from "./registerPage"
 import { useState, useEffect } from "react"
-import { Navigate} from "react-router-dom"
+import {Navigate} from "react-router-dom"
 import urls from "./variables/urls"
 
-export default function Login()  {
+
+export default function Register() {
+
     const [lgin, setLgin] = useState(false)
     const [loading, setLoading] = useState(true)
 useEffect(() => {
@@ -48,11 +50,9 @@ isLoggedIn()
    if(loading === false && lgin === true) {
     return <Navigate to="/"/>
 } else  if(loading === false  && lgin === false){
-    return <LoginPage/>
+    return <RegisterPage/>
 }  else  {
     return <p>Loading...</p>
 } 
 
-   
-  
 }
