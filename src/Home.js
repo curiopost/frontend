@@ -31,7 +31,7 @@ export default  function Home() {
       })
       
       const data  = await f.json()
-      console.log(data)
+   
 
         if(data.success) {
          setResponse(data)
