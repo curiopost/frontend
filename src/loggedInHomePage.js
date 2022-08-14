@@ -279,8 +279,10 @@ export default function Feeds(props) {
         document.getElementById('topics').innerHTML = null;
         if(interests.length < 1) return document.getElementById("thetopics").innerHTML = `<p>We don't really know what you like yet.. Like some posts and follow some users so we can find topics interesting to you!</p>`
         const bl = []
-        interests.forEach(i => {
-          if(bl.includes(i)) return;
+        interests.forEach(p => {
+          if(bl.includes(p)) return;
+
+          const i = DOMPurify.sanitize(p, {ALLOWED_TAGS: []})
          
 document.getElementById('thetopics').innerHTML+= `<a href="/topics/${i}" class="list-group-item list-group-item-action">#${i}</a>`
 bl.push(i)
