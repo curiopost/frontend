@@ -134,7 +134,7 @@ export default function Feeds(props) {
             <div className="card" style={{"width": "100%;"}} >
             <div className="card-body">
             <p className="float-end text-muted">{feed.created_date}</p>
-            <Link to={"/u/"+feed.username} className="text-decoration-none text-dark"><img src={feed.avatar_url ? feed.avatar_url: "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"} class="rounder" alt="logo" width="25" height="25"/>
+            <Link to={"/u/"+feed.username} className="text-decoration-none text-dark"><img src={feed.avatar_url ? feed.avatar_url: "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"} class="rounded" alt="logo" width="25" height="25"/>
             <p className="text-muted" style={{"marginBottom": "0"}}><strong>{cleanName} (@{feed.username})</strong></p></Link>
         
               <h5 className="card-title">{clean_feed_title} <small>({feed.type.toLowerCase()})</small></h5>
@@ -222,7 +222,7 @@ export default function Feeds(props) {
             
             <div className="card-body">
             <p className="float-end text-muted">{feed.created_date}</p>
-            <Link to={"/u/"+feed.username} className="text-decoration-none text-dark"><img src={feed.avatar_url ? feed.avatar_url: "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"} class="rounder" alt="logo" width="25" height="25"/>
+            <Link to={"/u/"+feed.username} className="text-decoration-none text-dark"><img src={feed.avatar_url ? feed.avatar_url: "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"} class="rounded" alt="logo" width="25" height="25"/>
             <p className="text-muted" style={{"marginBottom": "0"}}><strong>{cleanName} (@{feed.username})</strong></p></Link>
         
               <h5 className="card-title">{clean_feed_title} <small>({feed.type.toLowerCase()})</small></h5>
