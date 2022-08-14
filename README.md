@@ -8,7 +8,7 @@ Our frontend server the part which you view when visiting our site
 
 - [x] Home, signup, signin
 
-- [ ] Feeds Page
+- [x] Feeds Page
 
 - [ ] Manage account, profile page, and follow
 
