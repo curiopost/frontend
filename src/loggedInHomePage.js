@@ -285,7 +285,7 @@ export default function Feeds(props) {
           const i = DOMPurify.sanitize(p, {ALLOWED_TAGS: []})
          
 document.getElementById('thetopics').innerHTML+= `<a href="/topics/${i}" class="list-group-item list-group-item-action">#${i}</a>`
-bl.push(i)
+bl.push(p)
         })
       }
     }
