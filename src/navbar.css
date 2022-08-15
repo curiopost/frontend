@@ -2,3 +2,7 @@
     margin-left:7px;
     margin-right:7px;
   }
+
+  ::file-selector-button {
+    display: none;
+  }

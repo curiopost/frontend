@@ -141,7 +141,7 @@ export default function Feeds(props) {
               <div dangerouslySetInnerHTML={{__html:content}}/>
               
               
-              {filetype === "video" ? <div className="ratio ratio-16x9"><video controls>
+              {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata">
               <source src={feed.attachment_url} type="video/mp4"/>
               </video></div> : <div></div>}
               {filetype === "image" ? <img src={feed.attachment_url} class="img-fluid card-image" alt="post Image"/> : <div></div>}
@@ -229,7 +229,7 @@ export default function Feeds(props) {
               <div dangerouslySetInnerHTML={{__html:content}}/>
               
               
-              {filetype === "video" ? <div className="ratio ratio-16x9"><video controls>
+              {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata">
               <source src={feed.attachment_url} type="video/mp4"/>
               </video></div> : <div></div>}
               {filetype === "image" ? <img src={feed.attachment_url} class="img-fluid card-image" alt="post Image"/> : <div></div>}
@@ -293,8 +293,99 @@ bl.push(p)
     getFeeds()
 
   }, [])
+  const buffer = (element, text) => {
+
+    element.disabled = true 
+    element.innerText = text || "Loading..."
 
 
+}
+const unbuffer = (element, text) => {
+
+    element.disabled = false
+    element.innerText = text 
+
+
+}
+const createPost =  async () => {
+  const token =  window.localStorage.getItem("token")
+  buffer(document.getElementById('postcreatebtn'), "Creating Post...")
+  let mentions = []
+  let topics = []
+  let file_url = null
+  const title = document.getElementById('post-title').value
+  const content = document.getElementById('post-content').value
+  const postFile = document.getElementById('post-file')
+  if(!title)  {
+    unbuffer(document.getElementById('postcreatebtn'), "Create Post")
+   return toast.error("Post title is required!")
+  }
+  if(!content) {
+    unbuffer(document.getElementById('postcreatebtn'), "Create Post")
+    return toast.error("Post content is required!")
+  }
+
+  if(postFile.files.length > 0) {
+    
+    const formData = new FormData()
+
+const file = postFile.files[0]
+formData.append('attachment', file)
+const imrsp = await fetch(urls.cdn+"/upload", {
+  method: "POST",
+  body: formData
+})
+
+const data = await imrsp.json()
+if(data.success)  {
+file_url = data.url
+} else if(!data.success){
+  unbuffer(document.getElementById('postcreatebtn'), "Create Post")
+  return toast.error("Unexpected error occured  on our end, please try again!")
+  
+}
+}
+
+  let r = content.split(' ')
+
+  for(const content of r)  {
+    if(content.startsWith("#")) topics.push(content.replace('#', ''));
+    else if(content.startsWith("@")) mentions.push(content.replace('@', ''))
+  }
+  
+  
+ 
+
+  const postup = await fetch(urls.backend+"/api/create/post",{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "token": token
+    },
+    body: JSON.stringify({
+        title: title,
+        content: content,
+        topics: topics,
+        mentions: mentions,
+        attachment_url: file_url
+      })
+     
+    
+  })
+const pdata  = await postup.json()
+if(pdata.success) {
+
+  buffer(document.getElementById('postcreatebtn'), "Post Created, taking you there...")
+  toast.success(pdata.message)
+  setTimeout(() => {
+    window.location.href = `${pdata.url}`
+  }, 5000)
+  
+} else if(!pdata.success) {
+  toast.error(pdata.message)
+}
+
+}
 
   return (
     <div>
@@ -322,7 +413,7 @@ bl.push(p)
 
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark dropstart" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><a class="dropdown-item" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-post-fill" viewBox="0 0 16 16">
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#postModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-post-fill" viewBox="0 0 16 16">
                     <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-5-.5H7a.5.5 0 0 1 0 1H4.5a.5.5 0 0 1 0-1zm0 3h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5z" />
                   </svg> Post</a></li>
                   <li><a class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-lg" viewBox="0 0 16 16">
@@ -394,6 +485,47 @@ bl.push(p)
         {feeds}
       </div>
       <br /><br /><br /><br />
+      <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="postModallabel">Create a new post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div className="input-group mb-4 p-1">
+      <span id="b2" className="input-group-text">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chat-right-dots" viewBox="0 0 16 16">
+  <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+  <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+</svg>
+      </span>
+      <input type="text" className="form-control" id="post-title" placeholder="Post title... Whats on your mind?" />
+      </div>
+      <div className="input-group mb-4 p-1">
+        <span id="b3" className="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-blockquote-left" viewBox="0 0 16 16">
+  <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm5 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm-5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm.79-5.373c.112-.078.26-.17.444-.275L3.524 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282c.024-.203.065-.37.123-.498a1.38 1.38 0 0 1 .252-.37 1.94 1.94 0 0 1 .346-.298zm2.167 0c.113-.078.262-.17.445-.275L5.692 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282a1.75 1.75 0 0 1 .118-.492c.058-.13.144-.254.257-.375a1.94 1.94 0 0 1 .346-.3z"/>
+</svg></span>
+<textarea class="form-control" id="post-content" maxLength={400} placeholder="Describe your post... You can @mention users and add #tags for topics."></textarea>
+      </div>
+      <div className="input-group mb-4 p-1">
+        <span id="b4" className="input-group-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+  <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+</svg>
+        </span>
+          <input type="file" class="form-control" id="post-file" accept="image/*, video/*"/>
+
+      </div>
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-success w-100" onClick={createPost} id="postcreatebtn">Create Post</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     </div>
