@@ -387,6 +387,83 @@ if(pdata.success) {
 
 }
 
+const createQuestion = async() => {
+  const token = window.localStorage.getItem("token")
+  buffer(document.getElementById("qcreatebtn"), "Asking Question...")
+  let mentions = []
+  let topics = []
+  let file_url = null
+  const title = document.getElementById("q-title").value
+  const content = document.getElementById("q-content").value
+  const qFile = document.getElementById("q-file")
+  if(!title) {
+    unbuffer(document.getElementById("qcreatebtn"), "Ask Question?")
+    return toast.error("Question title is required!")
+  }
+
+  if(!content) {
+    unbuffer(document.getElementById("qcreatebtn"), "Ask Question?")
+    return toast.error("Question content is required!")
+  }
+
+  
+  
+  if(qFile.files.length > 0) {
+    const formData = new FormData()
+
+    const file = qFile.files[0]
+    formData.append('attachment', file)
+const imrsp = await fetch(urls.cdn+"/upload", {
+  method: "POST",
+  body: formData
+})
+
+const data = await imrsp.json()
+if(data.success)  {
+file_url = data.url
+} else if(!data.success){
+  unbuffer(document.getElementById('qcreatebtn'), "Ask Question?")
+  return toast.error("Unexpected error occured  on our end, please try again!")
+  
+}
+}
+
+let r = content.split(' ')
+
+for(const content of r)  {
+  if(content.startsWith("#")) topics.push(content.replace('#', ''));
+  else if(content.startsWith("@")) mentions.push(content.replace('@', ''))
+}
+
+const qup = await fetch(urls.backend+"/api/create/question", {
+  method: 'POST',
+  headers: {
+    "Content-Type": "application/json",
+    "token": token
+  },
+  body: JSON.stringify({
+    title: title,
+    content: content,
+    topics: topics,
+    mentions: mentions,
+    attachment_url: file_url
+  })
+})
+
+const data1 = await qup.json()
+
+if(!data1.success) {
+  unbuffer(document.getElementById('qcreatebtn'), "Ask Question?")
+  return toast.error(data1.message)
+} else if(data1.success) {
+  buffer(document.getElementById('qcreatebtn'), "Question Asked, taking you there...")
+  toast.success(data1.message)
+  setTimeout(() => {
+    window.location.href = `${data1.url}`
+  }, 5000)
+}
+
+}
   return (
     <div>
     <ToastContainer/>
@@ -413,10 +490,10 @@ if(pdata.success) {
 
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark dropstart" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#postModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-post-fill" viewBox="0 0 16 16">
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#postModal" style={{"cursor": "pointer"}}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-post-fill" viewBox="0 0 16 16">
                     <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-5-.5H7a.5.5 0 0 1 0 1H4.5a.5.5 0 0 1 0-1zm0 3h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5z" />
                   </svg> Post</a></li>
-                  <li><a class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-lg" viewBox="0 0 16 16">
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#qModal" style={{"cursor": "pointer"}}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-lg" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z" />
                   </svg> Question</a></li>
 
@@ -527,6 +604,47 @@ if(pdata.success) {
   </div>
 </div>
 
+
+<div class="modal fade" id="qModal" tabindex="-1" aria-labelledby="qModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="qModallabel">Ask a new question?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div className="input-group mb-4 p-1">
+      <span id="b2" className="input-group-text">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+</svg>
+      </span>
+      <input type="text" className="form-control" id="q-title" placeholder="Question title... What are you asking?" maxLength={50} />
+      </div>
+      <div className="input-group mb-4 p-1">
+        <span id="b3" className="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-blockquote-left" viewBox="0 0 16 16">
+  <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm5 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm-5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm.79-5.373c.112-.078.26-.17.444-.275L3.524 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282c.024-.203.065-.37.123-.498a1.38 1.38 0 0 1 .252-.37 1.94 1.94 0 0 1 .346-.298zm2.167 0c.113-.078.262-.17.445-.275L5.692 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282a1.75 1.75 0 0 1 .118-.492c.058-.13.144-.254.257-.375a1.94 1.94 0 0 1 .346-.3z"/>
+</svg></span>
+<textarea rows="3" class="form-control" id="q-content" maxLength={700} placeholder="Explain more about what your asking... You can @mention users and add #tags for topics."></textarea>
+      </div>
+      <div className="input-group mb-4 p-1">
+        <span id="b4" className="input-group-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+  <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+</svg>
+        </span>
+          <input type="file" class="form-control" id="q-file" accept="image/*, video/*"/>
+
+      </div>
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-success w-100"  id="qcreatebtn" onClick={createQuestion}>Ask Question?</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     </div>
   )
