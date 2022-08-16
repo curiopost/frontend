@@ -10,6 +10,7 @@ import DOMPurify from "dompurify"
 export default function Topics() {
 
     const {topic} = useParams()
+    document.title = `Posts with #${topic} / Curiopost`
    const [islgin, setIslgin] = useState(false)
    const [loading, setLoading] = useState(true)
    const [udata, setUdata] = useState({})
