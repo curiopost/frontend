@@ -4,6 +4,7 @@ import Login from "./login"
 import Logout from "./logout";
 import Register from "./Register"
 import Verify from "./verify"
+import Search from "./search"
 
 
 
@@ -17,6 +18,7 @@ return(
     <Route path="/logout" element={<Logout /> }/>
     <Route path="/register" element={<Register/>}/>
     <Route path="/verify" element={<Verify/>}/>
+    <Route path="/search" element={<Search/>}/>
     </Routes>
     </BrowserRouter>
 )
