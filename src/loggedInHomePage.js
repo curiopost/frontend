@@ -535,7 +535,7 @@ if(!data1.success) {
 
         </div>
       </nav>
-      <div className="topics float-end" style={{ "marginTop": "10%", "marginRight": "1%", "marginLeft": "1%", width: "20rem" }}>
+      <div className="topics float-end" style={{ "marginTop": "10%", "marginRight": "1%", "marginLeft": "1%", width: "20rem", "marginBottom": "1%"}}>
         <div className="card" aria-hidden="true">
 
           <div className="card-body">

@@ -5,6 +5,7 @@ import Logout from "./logout";
 import Register from "./Register"
 import Verify from "./verify"
 import Search from "./search"
+import Topics from "./topics"
 
 
 
@@ -19,6 +20,7 @@ return(
     <Route path="/register" element={<Register/>}/>
     <Route path="/verify" element={<Verify/>}/>
     <Route path="/search" element={<Search/>}/>
+    <Route path="/topics/:topic" element={<Topics/>}/>
     </Routes>
     </BrowserRouter>
 )
