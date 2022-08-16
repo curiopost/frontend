@@ -61,9 +61,9 @@ export default function Search() {
                 setResult([])
 
               
-                
+                for(const u of results.users) {
 
-                results.users.forEach(u => {
+          
                     setResult(result => [...result, <><Link  to={"/u/"+u.username}  className="text-decoration-none" style={{"marginBottom": "1%", "color": "inherit"}}>
                     <div className="card w-100" style={{"marginBottom": "1%"}}>
                      <div className="card-body">
@@ -75,8 +75,10 @@ export default function Search() {
                      </Link>
                    
                 </>])
-                })
-results.posts.forEach(p => {
+                }
+
+                for(const p of results.posts) {
+
     setResult(result => [...result, <><Link className="text-decoration-none" to={"/"+p.type.toLowerCase()+"s/"+p._id} style={{"marginBottom": "1%", "color": "inherit"}}>
     <div className="card w-100" style={{"marginBottom": "1%"}}>
     <div className="card-body">
@@ -88,7 +90,7 @@ results.posts.forEach(p => {
     </div>
     </Link>
 </>])
-})
+}
                 
 
                 if(result.length === 0) {
