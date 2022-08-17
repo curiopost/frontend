@@ -77,7 +77,7 @@ export default function Topics() {
 
           const i = DOMPurify.sanitize(p, {ALLOWED_TAGS: []})
          
-document.getElementById('thetopics').innerHTML+= `<a href="/topics/${i}" class="list-group-item list-group-item-action" id=${i}>#${i}</a>`
+document.getElementById('thetopics').innerHTML+= `<a href="/topics/${i}" class="list-group-item" id=${i}>#${i}</a>`
 
 bl.push(p)
         })
@@ -507,15 +507,18 @@ if(!data1.success) {
             <h5 className="card-title placeholder-glow">
               Topics For You
             </h5>
-            <ul id="thetopics" class="list-group"></ul>
+            <ul id="thetopics" className="list-group list-group-flush"></ul>
             <div id="topics">
             
             <p className="card-text placeholder-glow">
-              <span className="placeholder col-7"></span>
+            <span className="placeholder col-7"></span>
               <span className="placeholder col-4"></span>
               <span className="placeholder col-4"></span>
               <span className="placeholder col-6"></span>
               <span className="placeholder col-8"></span>
+            
+         
+             
             </p>
             </div>
           </div>
