@@ -350,7 +350,7 @@ if(!data1.success) {
   
           </div>
         </nav>  
-        <div className="feeds col-lg-6 offset-lg-3" id="feeds" style={{ "marginTop": "10%" }}>
+        <div className="feeds col-lg-6 offset-lg-3" style={{ "marginTop": "10%" }}>
 
       {notifications}    
       

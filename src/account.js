@@ -464,7 +464,7 @@ return (<div><ToastContainer/>
 
 
 
-<div className="feeds col-lg-6 offset-lg-3" id="feeds" style={{ "marginTop": "10%" }}>
+<div className="feeds col-lg-6 offset-lg-3" style={{ "marginTop": "10%" }}>
     <div className="card" style={{"marginBottom": "1%"}}>
         <div className="card-body">
             <h5 className="card-title">Account Information</h5>
