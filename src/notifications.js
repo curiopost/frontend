@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import './navbar.css'
-import getFileType from "./functions/getFileType"
-import DOMPurify from "dompurify"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import urls from "./variables/urls"

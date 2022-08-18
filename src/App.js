@@ -7,6 +7,7 @@ import Verify from "./verify"
 import Search from "./search"
 import Topics from "./topics"
 import Notifications from "./notifications";
+import Account from "./account";
 
 
 
@@ -23,6 +24,7 @@ return(
     <Route path="/search" element={<Search/>}/>
     <Route path="/topics/:topic" element={<Topics/>}/>
     <Route path="/notifications" element={<Notifications/>}/>
+    <Route path="/account" element={<Account/>}/>
     </Routes>
     </BrowserRouter>
 )
