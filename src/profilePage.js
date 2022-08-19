@@ -398,7 +398,7 @@ useEffect(() => {
                 <p style={{"marginBottom": "0"}}><strong>Joined</strong>: <div className="d-inline-block" id="user-joined">...</div></p>
                 <p style={{"marginBottom": "0"}}><strong>Location</strong>:  <div className="d-inline-block" id="user-location">...</div></p>
                 <p ><strong>Website</strong>:  <div className="d-inline-block" id="user-website">loading...</div></p>
-                <button className="btn btn-primary" style={{"width": "fit-content", "marginLeft": "1%"}}>Follow</button>
+                {islgin && udata.raw_data.username === username ? <Link className="btn btn-primary" to="/account" style={{"width": "fit-content", "marginLeft": "1%"}}>Edit Profile</Link> : <button className="btn btn-primary" style={{"width": "fit-content", "marginLeft": "1%"}}>Follow</button>}
               
                 </div>
               
