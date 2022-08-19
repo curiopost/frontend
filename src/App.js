@@ -8,6 +8,7 @@ import Search from "./search"
 import Topics from "./topics"
 import Notifications from "./notifications";
 import Account from "./account";
+import Profile from "./profilePage"
 
 
 
@@ -25,6 +26,7 @@ return(
     <Route path="/topics/:topic" element={<Topics/>}/>
     <Route path="/notifications" element={<Notifications/>}/>
     <Route path="/account" element={<Account/>}/>
+    <Route path="/u/:username" element={<Profile/>}/>
     </Routes>
     </BrowserRouter>
 )
