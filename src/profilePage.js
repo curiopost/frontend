@@ -86,7 +86,12 @@ useEffect(() => {
 
             const sanitize_u_web = DOMPurify.sanitize(data.raw_data.website, { ALLOWED_TAGS: [] })
             document.getElementById('user-website').innerHTML = `${data.raw_data.website ? `<a class="text-decoration-none" href=${sanitize_u_web} target="__blank">${sanitize_u_web}</a>` : "No Website."}`
-        } else if(!data.success){
+        
+        if(islgin && udata.raw_data.following.includes(data.raw_data._id)) {
+          document.getElementById('folowbtn').style.display = "none"
+    document.getElementById('unfollowbtn').style.display = "block" 
+        }
+          } else if(!data.success){
             document.getElementById('user-d-name').innerText = "User Not Found."
             document.getElementById('user-bio').innerHTML = "User Not Found."
             document.getElementById('follower-count').innerText = "0"
@@ -278,6 +283,63 @@ useEffect(() => {
     
     }
 
+    const followUser = async() => {
+const token = window.localStorage.getItem('token')
+if(!token) {
+  return toast.error('Please login to follow this user')
+}
+
+    document.getElementById('folowbtn').style.display = "none"
+    document.getElementById('unfollowbtn').style.display = "block"
+
+    const sendFollowRequest = await fetch(urls.backend+`/api/update/follow?username=${username}`, {
+      method: 'PATCH',
+      headers:{
+        "Content-Type": "application/json",
+        "token": token
+      }
+    })
+
+    const data = await sendFollowRequest.json()
+    if(data.success) {
+      return;
+    } else {
+      document.getElementById('folowbtn').style.display = "block"
+      document.getElementById('unfollowbtn').style.display = "none"
+      return toast.error(data.message)
+    }
+    }
+
+    const unFollowUser = async() => {
+
+      const token = window.localStorage.getItem('token')
+if(!token) {
+ return toast.error('Please login to follow this user.')
+}
+
+    document.getElementById('folowbtn').style.display = "block"
+    document.getElementById('unfollowbtn').style.display = "none"
+
+    const sendUnFollowRequest = await fetch(urls.backend+`/api/update/unfollow?username=${username}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        "token": token 
+      }
+    })
+
+    const data = await sendUnFollowRequest.json()
+
+    if(data.success) {
+      return;
+    } else {
+      document.getElementById('folowbtn').style.display = "none"
+      document.getElementById('unfollowbtn').style.display = "block"
+      return toast.error(data.message)
+
+    }
+  }
+
    if(loading === false) {
     return (<div><ToastContainer/>
         {islgin ?  
@@ -398,7 +460,7 @@ useEffect(() => {
                 <p style={{"marginBottom": "0"}}><strong>Joined</strong>: <div className="d-inline-block" id="user-joined">...</div></p>
                 <p style={{"marginBottom": "0"}}><strong>Location</strong>:  <div className="d-inline-block" id="user-location">...</div></p>
                 <p ><strong>Website</strong>:  <div className="d-inline-block" id="user-website">loading...</div></p>
-                {islgin && udata.raw_data.username === username ? <Link className="btn btn-primary" to="/account" style={{"width": "fit-content", "marginLeft": "1%"}}>Edit Profile</Link> : <button className="btn btn-primary" style={{"width": "fit-content", "marginLeft": "1%"}}>Follow</button>}
+                {islgin && udata.raw_data.username === username ? <Link className="btn btn-primary" to="/account" style={{"width": "fit-content", "marginLeft": "1%"}}>Edit Profile</Link> : <><button className="btn btn-primary" id="folowbtn" onClick={followUser} style={{"width": "fit-content", "marginLeft": "1%"}}>Follow</button> <button className="btn btn-primary" id="unfollowbtn" onClick={unFollowUser} style={{"width": "fit-content", "marginLeft": "1%", "display": "none"}}>Unfollow</button></>}
               
                 </div>
               
