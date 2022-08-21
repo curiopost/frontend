@@ -601,7 +601,7 @@ if(!token) {
         </div>
         </nav>}
 
-      <div >
+      <div className="container">
       <div className="col-lg-8 offset-lg-2">
            <div className="card" style={{"marginTop": "10%", "marginBottom": "2%"}}>
             <div className="card-body" style={{"marginTop": "10px"}}>
