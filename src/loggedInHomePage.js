@@ -96,7 +96,7 @@ export default function Feeds(props) {
       if (!data.success) {
         return;
       } else {
-        document.getElementById("feeds").innerHTML = null
+       setFeeds([])
 
  
         data.feeds.forEach(feed => {
