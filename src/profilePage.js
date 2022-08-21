@@ -15,6 +15,7 @@ export default function Profile() {
     const [islgin, setIslgin] = useState(false)
     const [loading, setLoading] = useState(true)
     const [udata, setUdata] = useState({})
+    const [posts, setPosts] = useState([<p className="text-center" style={{"marginTop": "2%"}}>Loading posts...</p>])
 
     useEffect(() => {
         const getUserData = async() => {
@@ -57,6 +58,7 @@ export default function Profile() {
 
 useEffect(() => {
     const setUprofile = async() => {
+      setPosts([<p className="text-center" style={{"marginTop": "2%"}}>Loading posts...</p>])
         const fetchProfile = await fetch(urls.backend+`/api/read/user?username=${username}`,{
             method: 'GET'
         })
@@ -91,6 +93,163 @@ useEffect(() => {
           document.getElementById('folowbtn').style.display = "none"
     document.getElementById('unfollowbtn').style.display = "block" 
         }
+
+        if(data.user_posts.length === 0) {
+          setPosts([<p className="text-center" style={{"marginTop": "2%"}}>This user has no posts.</p>])
+        } else {
+          setPosts([])
+        }
+
+        const like = async(id) => {
+          const token = window.localStorage.getItem("token")
+          if(!token) {
+            return toast.error("Please login to like this post!")
+          }
+          document.getElementById(`likebtn${id}`).style.display = "none"
+          document.getElementById(`unlikebtn${id}`).style.display = "block"
+          
+        
+          const sendL = await fetch(urls.backend+`/api/update/like?type=post&id=${id}`, {
+            method: 'PATCH',
+            headers: {
+              "Content-Type": "application/json",
+              "token": token
+            }
+    
+          })
+    
+          const data = await sendL.json()
+    
+          if(!data.success) {
+            return toast.error(data.message)
+          } else {
+           
+            document.getElementById(`likes_${id}`).innerText = data.likes
+    
+          }
+    
+        }
+    
+        const unlike = async(id) => {
+          const token = window.localStorage.getItem("token")
+          if(!token) {
+            return toast.error("Please login to unlike this post!")
+          }
+          document.getElementById(`unlikebtn${id}`).style.display = "none"
+          document.getElementById(`likebtn${id}`).style.display = "block"
+          
+          const sendL = await fetch(urls.backend+`/api/update/unlike?type=post&id=${id}`, {
+            method: 'PATCH',
+            headers: {
+              "Content-Type": "application/json",
+              "token": token
+            }
+    
+          })
+    
+          const data = await sendL.json()
+    
+          if(!data.success) {
+            return toast.error(data.message)
+          } else {
+           
+            document.getElementById(`likes_${id}`).innerText = data.likes
+    
+          }
+    
+        }
+        const share = (id, type) => {
+          navigator.clipboard.writeText(`https://curiopost.live/${type}/${id}`).then(n => {
+            return toast.success("Copied shareable link to clipboard!")
+          })
+        }
+
+        const userposts = data.user_posts.sort((a,b) => (parseFloat(b.created_at) - parseFloat(a.created_at)))
+
+      userposts.forEach(feed => {
+        let filetype;
+
+        if (feed.attachment_url) {
+          filetype = getFileType(feed.attachment_url)
+        } else if (!feed.attachment_url) {
+          filetype = null
+        }
+
+        const clean_feed_content = DOMPurify.sanitize(feed.content, { ALLOWED_TAGS: [] })
+        const clean_feed_title = DOMPurify.sanitize(feed.title, { ALLOWED_TAGS: [] })
+        const cleanName = DOMPurify.sanitize(data.raw_data.name, { ALLOWED_TAGS: [] })
+        function URLify(string) {
+          var urls = string.match(/(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)/g);
+          if (urls) {
+            urls.forEach(function (url) {
+              string = string.replace(url, '<a class="text-decoration-none" target="_blank" href="' + url + '">' + url + "</a>");
+            });
+          }
+          return  string.replace("(", "<br/>(");
+        }
+        function replaceAtMentionsWithLinks ( text ) {
+          return text.replace(/@([a-z\d_]+)/ig, '<a class="text-decoration-none" href="/u/$1">@$1</a>'); 
+      }
+
+        const content1 = URLify(clean_feed_content)
+        const content2 = replaceAtMentionsWithLinks(content1)
+        const content = content2.replace(/#(\S*)/g,'<a class="text-decoration-none" href="/topics/$1">#$1</a>');
+
+        setPosts(posts => [...posts, <div>
+          <div className="card" style={{"width": "100%;"}} >
+          
+          <div className="card-body">
+          <p className="float-end text-muted">{feed.creation_date}</p>
+          <Link to={"/u/"+username} className="text-decoration-none text-dark"><img src={feed.avatar_url ? feed.avatar_url: "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"} class="rounded" alt="logo" width="25" height="25"/>
+          <p className="text-muted" style={{"marginBottom": "0"}}><strong>{cleanName} (@{username})</strong></p></Link>
+      
+            <h5 className="card-title">{clean_feed_title} <small>({feed.type.toLowerCase()})</small></h5>
+            <div dangerouslySetInnerHTML={{__html:content}}/>
+            
+            
+            {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata">
+            <source src={feed.attachment_url} type="video/mp4"/>
+            </video></div> : <div></div>}
+            {filetype === "image" ? <img src={feed.attachment_url} class="img-fluid card-image" alt="post Image"/> : <div></div>}
+            
+          </div>
+          <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
+            {islgin && udata.raw_data.likes.includes(feed._id) ?<div>
+ <a id={"unlikebtn"+feed._id} onClick={() => {unlike(feed._id)}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px"}}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+</svg></a>
+<a id={"likebtn"+feed._id} onClick={() => {like(feed._id)}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px", "display": "none"}}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
+<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+</svg></a></div>:<div>
+<a id={"likebtn"+feed._id} onClick={() => {like(feed._id)}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px", }}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
+<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+</svg></a>  <a id={"unlikebtn"+feed._id} onClick={() => {unlike(feed._id)}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px", "display": "none"}}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+</svg></a></div>
+}
+<p id={"likes_"+feed._id}>{feed.likes}</p>  <a href={"/"+feed.type.toLowerCase()+"s/"+feed._id}style={{"cursor": "pointer", "marginLeft": "6px",}}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+<path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+</svg></a>
+<a onClick={( ()=> {share(feed._id, feed.type.toLowerCase()+"s")})} style={{"cursor": "pointer", "marginLeft": "6px",  }}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0d6efd" class="bi bi-share" viewBox="0 0 16 16">
+<path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+</svg></a>
+{islgin && udata.raw_data.username === username ? <><Link  to={"/"+feed.type.toLowerCase()+"s/"+feed._id+"/manage"} style={{"cursor": "pointer", "marginLeft": "6px",  }}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0d6efd" class="bi bi-pencil-square" viewBox="0 0 16 16">
+<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+</svg></Link>
+<Link to={"/"+feed.type.toLowerCase()+"s/"+feed._id+"/manage"} style={{"cursor": "pointer", "marginLeft": "6px",  }}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-trash-fill" viewBox="0 0 16 16">
+<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg></Link> 
+</>
+
+
+: <></>}
+</div>
+
+        </div>
+        <br/>
+        </div>])
+      })
           } else if(!data.success){
             document.getElementById('user-d-name').innerText = "User Not Found."
             document.getElementById('user-bio').innerHTML = "User Not Found."
@@ -100,6 +259,7 @@ useEffect(() => {
             document.getElementById('user-joined').innerText = "User Not Found"
             document.getElementById('user-location').innerText = "Earth"
             document.getElementById('user-website').innerText = "User Not Found"
+            setPosts([<p className="text-center" style={{"marginTop": "2%"}}>This user doesn't exist.</p>])
 
 
         }
@@ -443,7 +603,7 @@ if(!token) {
 
       <div className="container">
            
-           <div className="card" style={{"marginTop": "10%"}}>
+           <div className="card" style={{"marginTop": "10%", "marginBottom": "2%"}}>
             <div className="card-body" style={{"marginTop": "10px"}}>
                
             <img className="float-start" id="user-av" height={50} width={50} style={{"borderRadius": "50%", "marginRight": "3%"}}
@@ -471,6 +631,7 @@ if(!token) {
                 
             </div>
            </div>
+           {posts}
             </div>
            
         <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModal" aria-hidden="true">
