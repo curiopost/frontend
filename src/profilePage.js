@@ -601,8 +601,8 @@ if(!token) {
         </div>
         </nav>}
 
-      <div className="container">
-           
+      <div >
+      <div className="col-lg-8 offset-lg-2">
            <div className="card" style={{"marginTop": "10%", "marginBottom": "2%"}}>
             <div className="card-body" style={{"marginTop": "10px"}}>
                
@@ -631,7 +631,9 @@ if(!token) {
                 
             </div>
            </div>
+         
            {posts}
+            </div>
             </div>
            
         <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModal" aria-hidden="true">
