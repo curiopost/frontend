@@ -10,6 +10,6 @@ Our frontend server the part which you view when visiting our site
 
 - [x] Feeds Page
 
-- [ ] Manage account, profile page, and follow
+- [x] Manage account, profile page, and follow
 
 - [ ] Other stuff
