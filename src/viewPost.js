@@ -792,7 +792,7 @@ return (<div>
                     <Link className="nav-link" to="/register">Register</Link> 
                     </li>
                     <li className="nav-item">
-                    <Link className="nav-link  active" to="/search">Search</Link> 
+                    <Link className="nav-link" to="/search">Search</Link> 
                     </li>
                     
                     
