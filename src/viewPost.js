@@ -13,6 +13,8 @@ export default function ViewPost() {
     const [loading, setLoading] = useState(true)
     const [udata, setUdata] = useState({})
     const [post, setPost] = useState([<p className="text-center" style={{"marginTop": "15%"}}>Loading post...</p>])
+    const [replies, setReplies] = useState([])
+    const [rcount, setRcount] = useState([])
 useEffect(() => {
     const getUserData = async() => {
 
@@ -53,7 +55,7 @@ useEffect(() => {
 
 useEffect(() => {
     
-    const like = async(id) => {
+    const like = async(id, type10) => {
        if(!islgin) {
            return toast.error("Please login to like posts and questions!")
         }
@@ -61,7 +63,7 @@ useEffect(() => {
         document.getElementById(`unlikebtn${id}`).style.display = "block"
         
         const token = window.localStorage.getItem("token")
-        const sendL = await fetch(urls.backend+`/api/update/like?type=post&id=${id}`, {
+        const sendL = await fetch(urls.backend+`/api/update/like?type=${type10 || "post"}&id=${id}`, {
           method: 'PATCH',
           headers: {
             "Content-Type": "application/json",
@@ -82,14 +84,14 @@ useEffect(() => {
   
       }
   
-      const unlike = async(id) => {
+      const unlike = async(id, type10) => {
         if(!islgin) {
             return toast.error("Please login to like posts and questions!")
          }
         document.getElementById(`unlikebtn${id}`).style.display = "none"
         document.getElementById(`likebtn${id}`).style.display = "block"
         const token = window.localStorage.getItem("token")
-        const sendL = await fetch(urls.backend+`/api/update/unlike?type=post&id=${id}`, {
+        const sendL = await fetch(urls.backend+`/api/update/unlike?type=${type10 || "post"}&id=${id}`, {
           method: 'PATCH',
           headers: {
             "Content-Type": "application/json",
@@ -114,6 +116,7 @@ useEffect(() => {
           return toast.success("Copied shareable link to clipboard!")
         })
       }
+
 
 
 const setThePost = async(type1) => {
@@ -208,12 +211,142 @@ const setThePost = async(type1) => {
                    
 
                 </div>
-                {islgin ? 
-                <button className="btn btn-primary w-100" style={{"marginTop": "1%"}}>Add a Reply</button> : <></>
-            }
-                <br/>
-                </>])
+                <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="replyModallabel">Add a new reply</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div className="input-group mb-4 p-1">
+        <span className="input-group-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-blockquote-left" viewBox="0 0 16 16">
+  <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm5 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm-5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm.79-5.373c.112-.078.26-.17.444-.275L3.524 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282c.024-.203.065-.37.123-.498a1.38 1.38 0 0 1 .252-.37 1.94 1.94 0 0 1 .346-.298zm2.167 0c.113-.078.262-.17.445-.275L5.692 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282a1.75 1.75 0 0 1 .118-.492c.058-.13.144-.254.257-.375a1.94 1.94 0 0 1 .346-.3z"/>
+</svg>
+        </span>
+        <textarea rows="3" class="form-control" id="reply-content" maxLength={500} placeholder="Reply content... You can use #tags for topics and @mentions to mention people."></textarea>
+        </div>
+        <div className="input-group mb-4 p-1">
+        <span className="input-group-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+  <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+</svg>
+          </span>
+          <input type="file" class="form-control" id="reply-file" name="reply-file" accept="image/*, video/*" onPaste={(e) => {document.getElementById('reply-file').files = e.clipboardData.files}}/>
 
+        </div>
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-success w-100"  id="replycreatebtn" onClick={createReply}>Add Reply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                {islgin ? 
+                <button className="btn btn-success" style={{"marginTop": "1%"}} data-bs-toggle="modal" data-bs-target="#replyModal">Add a Reply</button> : <></>
+            }
+            
+                </>])
+const getPostReplies = await fetch(urls.backend+`/api/read/replies?post_id=${id}`, {
+  method: 'GET'
+})
+
+
+const replyD = await getPostReplies.json()
+setReplies([])
+if(replyD.success) {
+
+  setRcount([<h5 className="text-muted text-center" style={{"marginTop": "1%"}}>{ replyD.total_replies !== 1 ? replyD.total_replies+ " Replies": replyD.total_replies+" Reply"} </h5>])
+  
+ const rdata = replyD.data.sort((a,b) => (parseFloat(b.likes.length) - parseFloat(a.likes.length)))
+ rdata.forEach(data => {
+    data.raw_data = data 
+    data.processed_data = data
+    let filetype;
+    const cleanDescription = DOMPurify.sanitize(data.raw_data.content, {ALLOWED_TAGS: []})
+    function URLify(string) {
+        var urls = string.match(/(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)/g);
+        if (urls) {
+          urls.forEach(function (url) {
+            string = string.replace(url, '<a class="text-decoration-none" target="_blank" href="' + url + '">' + url + "</a>");
+          });
+        }
+        return  string.replace("(", "<br/>(");
+      }
+      function replaceAtMentionsWithLinks ( text ) {
+        return text.replace(/@([a-z\d_]+)/ig, '<a class="text-decoration-none" href="/u/$1">@$1</a>'); 
+    }
+
+    const content0 = URLify(cleanDescription)
+    const content1 = replaceAtMentionsWithLinks(content0)
+    const content2 = content1.replace(/#(\S*)/g,'<a class="text-decoration-none" href="/topics/$1">#$1</a>');
+    if(data.raw_data.attachment_url) {
+        filetype = getFileType(data.raw_data.attachment_url)
+    } else {
+        filetype = null
+    }
+setReplies(replies => [...replies, <>
+        <div className="card" style={{"marginTop": "2%"}}>
+                    <div className="card-body">
+                        <p className="float-end text-muted">{data.processed_data.created_date}</p>
+                        <Link className="text-decoration-none text-dark" to={"/u/"+data.processed_data.username}>
+                            <img className="rounded" alt="logo" width="25" height="25" src={data.processed_data.avatar_url ? data.processed_data.avatar_url : "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"}></img>
+                            <p className="text-muted" style={{"marginBottom": "0"}}>
+                                <strong>{data.processed_data.name} (@{data.processed_data.username})</strong>
+                            </p>
+                        </Link>
+                       
+                        <div dangerouslySetInnerHTML={{__html:content2}}/>
+                        {filetype === "video" ? <div className="ratio ratio-16x9">
+                        <video controls preload="metadata">
+                        <source src={data.raw_data.attachment_url} type="video/mp4"/>
+                        </video>
+                        </div> : <></>}
+                        {filetype === "image" ? <img src={data.raw_data.attachment_url} class="img-fluid card-image" alt="post Image"/> : <></>}
+                        </div>
+                        <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
+                    
+                {islgin && data.raw_data.likes.includes(udata.raw_data._id) ?<div>
+     <a id={"unlikebtn"+data.raw_data._id} onClick={() => {unlike(data.raw_data._id, "reply")}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px"}}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+  </svg></a>
+  <a id={"likebtn"+data.raw_data._id} onClick={() => {like(data.raw_data._id, "reply")}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px", "display": "none"}}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
+    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+  </svg></a></div>:<div>
+  <a id={"likebtn"+data.raw_data._id} onClick={() => {like(data.raw_data._id, "reply")}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px", }}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
+    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+  </svg></a>  <a id={"unlikebtn"+data.raw_data._id} onClick={() => {unlike(data.raw_data._id, "reply")}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px", "display": "none"}}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+  </svg></a></div>
+  }
+  <p id={"likes_"+data.raw_data._id}>{data.processed_data.total_likes}</p>  <a href={"/"+"replies/"+data.raw_data._id}style={{"cursor": "pointer", "marginLeft": "6px",}}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+  <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+  </svg></a>
+  <a onClick={( ()=> {share(data.raw_data._id, "replies")})} style={{"cursor": "pointer", "marginLeft": "6px",  }}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0d6efd" class="bi bi-share" viewBox="0 0 16 16">
+  <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+  </svg></a>
+  {islgin && udata.raw_data.username === data.processed_data.username ? <><Link  to={"/"+type1+"s/"+data.raw_data._id+"/manage"} style={{"cursor": "pointer", "marginLeft": "6px",  }}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0d6efd" class="bi bi-pencil-square" viewBox="0 0 16 16">
+    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+  </svg></Link>
+  <Link to={"/"+type1+"s/"+data.raw_data._id+"/manage"} style={{"cursor": "pointer", "marginLeft": "6px",  }}><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-trash-fill" viewBox="0 0 16 16">
+    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+  </svg></Link> 
+  </>
+  
+  
+  : <></>}</div>
+                   
+
+                </div>
+</>])
+  })
+}
 
         
     
@@ -247,6 +380,78 @@ const unbuffer = (element, text) => {
 
 
 }
+
+const createReply = async() => {
+const token = window.localStorage.getItem("token")
+buffer(document.getElementById('replycreatebtn'), "Adding Reply...")
+let mentions = []
+let topics= []
+let file_url = null
+const content = document.getElementById('reply-content').value 
+const replyFile = document.getElementById('reply-file')
+
+if(!content) {
+
+  unbuffer(document.getElementById('replycreatebtn'), "Add Reply")
+  return toast.error("Reply content is required!")
+}
+
+if(replyFile.files.length > 0) {
+  const formData = new FormData()
+  const file = replyFile.files[0]
+  formData.append('attachment', file)
+  const imrsp = await fetch(urls.cdn+"/upload", {
+    method: "POST",
+    body: formData
+  })
+  
+  const data = await imrsp.json()
+  if(data.success)  {
+  file_url = data.url
+  } else if(!data.success){
+    unbuffer(document.getElementById('replycreatebtn'), "Add Reply")
+    return toast.error("Unexpected error occured  on our end, please try again!")
+    
+  }
+}
+
+let r = content.split(' ')
+
+  for(const content of r)  {
+    if(content.startsWith("#")) topics.push(content.replace('#', ''));
+    else if(content.startsWith("@")) mentions.push(content.replace('@', ''))
+  }
+
+  const sendReplyRequest = await fetch(urls.backend+"/api/create/reply",{
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      "token": token
+    },
+    body: JSON.stringify({
+      replied_to: id,
+      content: content,
+      topics: topics,
+      mentions: mentions,
+      attachment_url: file_url
+    })
+  })
+
+  const getReplyStatus = await sendReplyRequest.json()
+  if(getReplyStatus.success) {
+    document.getElementById('reply-content').value = ""
+    document.getElementById('reply-file').value=""
+    unbuffer(document.getElementById('replycreatebtn'), "Add Reply")
+    return toast.success("Successfully added reply!")
+
+  } else {
+    return toast.error(getReplyStatus.message)
+  }
+}
+
+
+
+
 const createPost =  async () => {
   const token =  window.localStorage.getItem("token")
   buffer(document.getElementById('postcreatebtn'), "Creating Post...")
@@ -511,7 +716,9 @@ return (<div>
         <div className="container">
       <div className="col-lg-8 offset-lg-2">
        {post}
- 
+    {rcount}
+       {replies}
+       <br/><br/><br/><br/><br/>
         </div>
         </div>
 
