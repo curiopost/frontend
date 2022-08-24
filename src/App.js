@@ -11,6 +11,8 @@ import Account from "./account";
 import Profile from "./profilePage"
 import ViewPost from "./viewPost"
 import Manage from "./manage"
+import Terms from "./terms"
+import Privacy from "./privacy"
 
 
 
@@ -31,6 +33,8 @@ return(
     <Route path="/u/:username" element={<Profile/>}/>
     <Route path="/:type/:id" element={<ViewPost/>}/>
     <Route path="/:type/:id/manage" element={<Manage/>}/>
+    <Route path="/terms" element={<Terms/>}/>
+    <Route path="/privacy" element={<Privacy/>}/>
     </Routes>
     </BrowserRouter>
 )
