@@ -12,4 +12,4 @@ Our frontend server the part which you view when visiting our site
 
 - [x] Manage account, profile page, and follow
 
-- [ ] Other stuff
+- [x] Other stuff
