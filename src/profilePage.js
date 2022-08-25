@@ -721,6 +721,6 @@ if(!token) {
 </div>
     </div>)
    } else if(loading === true) {
-    return <p>Loading...</p>
+      return <></>
    }
 }

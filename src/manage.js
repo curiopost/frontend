@@ -676,7 +676,7 @@ if(islgin === true && loading === false) {
 
     )
 } else if(islgin === false && loading === true) {
-    return <p>Loading...</p>
+    return <></>
 } else {
     return <Navigate to ="/login"/>
 

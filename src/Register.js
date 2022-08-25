@@ -52,7 +52,7 @@ isLoggedIn()
 } else  if(loading === false  && lgin === false){
     return <RegisterPage/>
 }  else  {
-    return <p>Loading...</p>
+    return <></>
 } 
 
 }

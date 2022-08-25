@@ -50,7 +50,7 @@ isLoggedIn()
 } else  if(loading === false  && lgin === false){
     return <LoginPage/>
 }  else  {
-    return <p>Loading...</p>
+    return <></>
 } 
 
    

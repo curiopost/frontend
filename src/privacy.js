@@ -6,9 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import './navbar.css'
 export default function Privacy() {
     document.title = "Privacy / Curiopost"
-    const [lgin, setLgin] = useState({})
+    const [lgin, setLgin] = useState(window.localStorage.getItem("token")?{success: true, raw_data: {username: null}}:{})
     
-    const [islgin, setIslgin] = useState(false)
+    const [islgin, setIslgin] = useState(window.localStorage.getItem("token")?true:false)
 
 
     useEffect(() => {

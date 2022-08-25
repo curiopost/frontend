@@ -13,6 +13,7 @@ import ViewPost from "./viewPost"
 import Manage from "./manage"
 import Terms from "./terms"
 import Privacy from "./privacy"
+import NotFound from "./NotFound";
 
 
 
@@ -35,6 +36,7 @@ return(
     <Route path="/:type/:id/manage" element={<Manage/>}/>
     <Route path="/terms" element={<Terms/>}/>
     <Route path="/privacy" element={<Privacy/>}/>
+    <Route path="*" element={<NotFound/>}/>
     </Routes>
     </BrowserRouter>
 )

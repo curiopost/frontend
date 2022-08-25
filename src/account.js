@@ -713,7 +713,7 @@ return (<div><ToastContainer/>
     } else if(loading === false && lgin === false) {
         return <Navigate to="/login"/>
     } else {
-        return <p>Loading...</p>
+      return <></>
     }
 
 }

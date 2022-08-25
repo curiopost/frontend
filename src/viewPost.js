@@ -9,9 +9,9 @@ import DOMPurify from "dompurify"
 
 export default function ViewPost() {
     const {type, id} = useParams()
-    const [islgin, setIslgin] = useState(false)
+    const [islgin, setIslgin] = useState(window.localStorage.getItem("token")?true:false)
     const [loading, setLoading] = useState(true)
-    const [udata, setUdata] = useState({})
+    const [udata, setUdata] = useState(window.localStorage.getItem("token")?{success: true, raw_data: {username: null}}:{})
     const [post, setPost] = useState([<p className="text-center" style={{"marginTop": "15%"}}>Loading post...</p>])
     const [replies, setReplies] = useState([])
     const [rcount, setRcount] = useState([])

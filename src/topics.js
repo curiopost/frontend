@@ -619,6 +619,6 @@ if(!data1.success) {
     return <Navigate to="/login"/>
    
 } else {
-    return <p>Loading...</p>
+    return <></>
 }
 }
