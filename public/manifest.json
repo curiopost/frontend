@@ -1,0 +1,15 @@
+{
+    "short_name": "Curiopost",
+    "name": "Curiopost",
+    "icons": [
+      {
+        "src": "logo.png",
+        "sizes": "512x512",
+        "type": "image/x-icon"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#ec1c24",
+    "background_color": "#ec1c24"
+  }
