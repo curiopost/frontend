@@ -8,49 +8,11 @@ import getFileType from "./functions/getFileType"
 import DOMPurify from "dompurify"
 
 
-export default function Manage() {
+export default function Manage(props) {
     const {type, id} = useParams()
-    const [islgin, setIslgin] = useState(false)
-    const [loading, setLoading] = useState(true)
-    const [udata, setUdata] = useState({})
+  const udata = props.data
     const [form, setForm] = useState([<p className="text-center">Loading Data...</p>])
-    useEffect(() => {
-        const getUserData = async() => {
-    
-            const token = window.localStorage.getItem("token")
-            if(!token) {
-                setIslgin(false)
-                setUdata({})
-                setLoading(false)
-                return;
-            }
-    
-            const getUserData = await fetch(urls.backend+"/api/auth/getuser", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "token": token
-                }
-            })
-    
-            const data = await getUserData.json()
-            if(data.success) {
-                setIslgin(true)
-                setUdata(data)
-                setLoading(false)
-                return;
-            } else {
-                setIslgin(false)
-                setUdata(data)
-                setLoading(false)
-                return;
-    
-            }
-    
-        }
-    
-        getUserData()
-    }, [])
+
 
     useEffect(() => {
         const setPostData = async() => {
@@ -209,20 +171,20 @@ export default function Manage() {
             }
         }
 
-        if(loading === false && type === "posts") {
+        if(type === "posts") {
             document.title = "Managing a Post / Curiopost"
             setPostData()
-        } else if(loading === false && type === "questions") {
+        } else if(type === "questions") {
             document.title = "Managing a Question / Curiopost"
             setQuestionData()
-        } else if(loading === false && type === "replies") {
+        } else if(type === "replies") {
             document.title = "Managing a Reply / Curiopost"
             setReplyData()
-        } else if(loading === false) {
+        } else {
             document.title = "Not Found / Curiopost"
             setForm([<p className="text-center">Not Found</p>])
         }
-    }, [loading, type, id])
+    }, [type, id])
 
     const buffer = (element, text) => {
 
@@ -514,7 +476,7 @@ export default function Manage() {
     
     }
     
-if(islgin === true && loading === false) {
+
 
     return (<div>
           <ToastContainer/>
@@ -675,10 +637,5 @@ if(islgin === true && loading === false) {
     </div>
 
     )
-} else if(islgin === false && loading === true) {
-    return <></>
-} else {
-    return <Navigate to ="/login"/>
 
-}
 }

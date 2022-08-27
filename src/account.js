@@ -6,51 +6,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import urls from "./variables/urls"
 
 
-export default function Account() {
+export default function Account(props) {
 
     document.title = "Account Settings / Curiopost"
 
-    const [lgin, setLgin] = useState(false)
-    const [udata, setUdata] = useState({})
-    const [loading, setLoading] = useState(true)
+const udata = props.data
 
-    useEffect(() => {
-        const getUdata = async() => {
-            const token = window.localStorage.getItem("token")
-            if(!token) {
-                setLgin(false)
-                setUdata({})
-                setLoading(false)
-                return;
-    
-            }
-    
-            const sendreq = await fetch(urls.backend+"/api/auth/getuser", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "token": token
-                }
-            })
-    
-            const data = await sendreq.json()
-            if(data.success) {
-                setUdata(data)
-                setLgin(true)
-                setLoading(false)
-                return;
-            } else {
-                setUdata({})
-                setLgin(false)
-                setLoading(false)
-                return;
-    
-    
-            }
-    }
-    
-    getUdata() 
-    }, [])
+   
 
 
     
@@ -392,7 +354,7 @@ if(avatarFile.files.length > 0) {
         }
     }
 
-    if(loading === false && lgin === true) {
+
 return (<div><ToastContainer/>
 <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
 <div className="container-fluid">
@@ -710,10 +672,6 @@ return (<div><ToastContainer/>
   </div>
 </div>
 </div>)
-    } else if(loading === false && lgin === false) {
-        return <Navigate to="/login"/>
-    } else {
-      return <></>
-    }
+   
 
 }

@@ -8,53 +8,16 @@ import "./profilePage.css"
 import getFileType from "./functions/getFileType"
 import DOMPurify from "dompurify"
 
-export default function Profile() {
+export default function Profile(props) {
 
     const {username} = useParams()
     document.title = `Curiopost (@${username})`
-    const [islgin, setIslgin] = useState(false)
-    const [loading, setLoading] = useState(true)
-    const [udata, setUdata] = useState({})
+    const islgin = props.islgin
+ 
+    const udata = props.data
     const [posts, setPosts] = useState([<p className="text-center" style={{"marginTop": "2%"}}>Loading posts...</p>])
 
-    useEffect(() => {
-        const getUserData = async() => {
 
-            const token = window.localStorage.getItem("token")
-            if(!token) {
-                setIslgin(false)
-                setUdata({})
-                setLoading(false)
-                return;
-            }
-    
-            const getUserData = await fetch(urls.backend+"/api/auth/getuser", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "token": token
-                }
-            })
-    
-            const data = await getUserData.json()
-            if(data.success) {
-                setIslgin(true)
-                setUdata(data)
-                setLoading(false)
-                return;
-            } else {
-                setIslgin(false)
-                setUdata(data)
-                setLoading(false)
-                return;
-    
-            }
-    
-        }
-       
-    
-        getUserData() 
-    }, [])
 
 useEffect(() => {
     const setUprofile = async() => {
@@ -265,11 +228,10 @@ useEffect(() => {
         }
     }
 
-    if(loading === false) {
- 
+   
         setUprofile()
-    }
-}, [username, loading])
+    
+}, [username])
 
     const buffer = (element, text) => {
 
@@ -500,7 +462,7 @@ if(!token) {
     }
   }
 
-   if(loading === false) {
+
     return (<div><ToastContainer/>
         {islgin ?  
           <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -720,7 +682,5 @@ if(!token) {
   </div>
 </div>
     </div>)
-   } else if(loading === true) {
-      return <></>
-   }
+   
 }

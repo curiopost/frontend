@@ -94,7 +94,7 @@ export default function Feeds(props) {
       setLoading(false)
 
       if (!data.success) {
-        return;
+        return toast.error("Could not load feeds, please reload the page!")
       } else {
        setFeeds([])
 

@@ -4,49 +4,18 @@ import urls from "./variables/urls"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './navbar.css'
-export default function Search() {
+export default function Search(props) {
     document.title = "Curiopost / Search"
-    const [lgin, setLgin] = useState(window.localStorage.getItem("token")?{success: true, raw_data: {username: null}}:{})
+
+    const lgin = props.data
+    const islgin = props.islgin
     
-    const [islgin, setIslgin] = useState(window.localStorage.getItem("token")?true:false)
+
     const [query, setQuery] = useState('')
     const [result, setResult] = useState([])
     const [message, setMessage] = useState('Enter a query to search.')
 
-    useEffect(() => {
-        const haslgin = async() => {
-            const token = window.localStorage.getItem("token")
-            if(!token) {
-                setIslgin(false)
-                setLgin({})
-
-                return;
-            }
-
-            const fetchAccount= await fetch(urls.backend+"/api/auth/getuser", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "token": token
-                }
-            })
-
-            const data = await fetchAccount.json()
-            if(data.success) {
-                setIslgin(true)
-                setLgin(data)
-
-                return;
-            } else if(!data.success) {
-                setIslgin(false)
-                setLgin({})
-
-                return;
-            }
-        }
-
-        haslgin()
-    }, [])
+ 
 
     useEffect(() => {
        

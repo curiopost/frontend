@@ -7,51 +7,14 @@ import './navbar.css'
 import getFileType from "./functions/getFileType"
 import DOMPurify from "dompurify"
 
-export default function ViewPost() {
+export default function ViewPost(props) {
     const {type, id} = useParams()
-    const [islgin, setIslgin] = useState(window.localStorage.getItem("token")?true:false)
-    const [loading, setLoading] = useState(true)
-    const [udata, setUdata] = useState(window.localStorage.getItem("token")?{success: true, raw_data: {username: null}}:{})
+    const islgin = props.islgin
+ 
+const udata = props.data
     const [post, setPost] = useState([<p className="text-center" style={{"marginTop": "15%"}}>Loading post...</p>])
     const [replies, setReplies] = useState([])
     const [rcount, setRcount] = useState([])
-useEffect(() => {
-    const getUserData = async() => {
-
-        const token = window.localStorage.getItem("token")
-        if(!token) {
-            setIslgin(false)
-            setUdata({})
-            setLoading(false)
-            return;
-        }
-
-        const getUserData = await fetch(urls.backend+"/api/auth/getuser", {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "token": token
-            }
-        })
-
-        const data = await getUserData.json()
-        if(data.success) {
-            setIslgin(true)
-            setUdata(data)
-            setLoading(false)
-            return;
-        } else {
-            setIslgin(false)
-            setUdata(data)
-            setLoading(false)
-            return;
-
-        }
-
-    }
-
-    getUserData()
-}, [])
 
 useEffect(() => {
     
@@ -447,16 +410,16 @@ const setTheReply = async() => {
   
 }
 
-if(loading === false && type === "posts") {
+if(type === "posts") {
     setThePost("post")
-} else if(loading === false && type === "questions") {
+} else if(type === "questions") {
     setThePost("question")
-} else if(type === "replies") {
+} else if("replies") {
   setTheReply()
 }
 
 
-}, [type, id, loading])
+}, [type, id])
 
 const buffer = (element, text) => {
 

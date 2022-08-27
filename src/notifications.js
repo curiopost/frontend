@@ -5,54 +5,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import urls from "./variables/urls"
 
-export default function Notifications() {
+export default function Notifications(props) {
 
-    const [lgin, setLgin] = useState(false)
-    const [udata, setUdata] = useState({})
-    const [loading, setLoading] = useState(true)
+
+const udata = props.data;
+ 
     const [notifications, setNotifications] = useState([<> <div className="card" style={{"marginBottom": '2%'}}> <div className="card-body"> <span class="placeholder col-7"></span> <span class="placeholder col-4"></span> <span class="placeholder col-4"></span> <span class="placeholder col-6"></span> <span class="placeholder col-8"></span> </div></div><div className="card" style={{"marginBottom": '2%'}}> <div className="card-body"> <span class="placeholder col-7"></span> <span class="placeholder col-4"></span> <span class="placeholder col-4"></span> <span class="placeholder col-6"></span> <span class="placeholder col-8"></span> </div></div><div className="card" style={{"marginBottom": '2%'}}> <div className="card-body"> <span class="placeholder col-7"></span> <span class="placeholder col-4"></span> <span class="placeholder col-4"></span> <span class="placeholder col-6"></span> <span class="placeholder col-8"></span> </div></div><div className="card" style={{"marginBottom": '2%'}}> <div className="card-body"> <span class="placeholder col-7"></span> <span class="placeholder col-4"></span> <span class="placeholder col-4"></span> <span class="placeholder col-6"></span> <span class="placeholder col-8"></span> </div></div><div className="card" style={{"marginBottom": '2%'}}> <div className="card-body"> <span class="placeholder col-7"></span> <span class="placeholder col-4"></span> <span class="placeholder col-4"></span> <span class="placeholder col-6"></span> <span class="placeholder col-8"></span> </div></div><div className="card" style={{"marginBottom": '2%'}}> <div className="card-body"> <span class="placeholder col-7"></span> <span class="placeholder col-4"></span> <span class="placeholder col-4"></span> <span class="placeholder col-6"></span> <span class="placeholder col-8"></span> </div></div></>])
 
     document.title = "Notifications / Curiopost"
 
-useEffect(() => {
 
-    const getUdata = async() => {
-        const token = window.localStorage.getItem("token")
-        if(!token) {
-            setLgin(false)
-            setUdata({})
-            setLoading(false)
-            return;
-
-        }
-
-        const sendreq = await fetch(urls.backend+"/api/auth/getuser", {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "token": token
-            }
-        })
-
-        const data = await sendreq.json()
-        if(data.success) {
-            setUdata(data)
-            setLgin(true)
-            setLoading(false)
-            return;
-        } else {
-            setUdata({})
-            setLgin(false)
-            setLoading(false)
-            return;
-
-
-        }
-}
-
-getUdata()
-
-}, [])
 
 useEffect(() =>{ 
 
@@ -99,11 +61,11 @@ useEffect(() =>{
       
     }
     
-    if(loading === false && lgin === true) {
+ 
         setNotifications([])
         setNotifis()
-    }
-}, [loading])
+    
+}, [])
     
     
 const buffer = (element, text) => {
@@ -280,7 +242,7 @@ if(!data1.success) {
     
     
     
-    if(loading === false && lgin === true) {
+
         return (<div>
           <ToastContainer/>
           <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -444,11 +406,6 @@ if(!data1.success) {
     
     
     
-    } else if(loading === false && lgin === false) {
-        return <Navigate to="/login"/>
-    } else {
-        return <></>
-    }
 
 
 }

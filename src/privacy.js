@@ -4,47 +4,14 @@ import urls from "./variables/urls"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './navbar.css'
-export default function Privacy() {
+export default function Privacy(props) {
     document.title = "Privacy / Curiopost"
-    const [lgin, setLgin] = useState(window.localStorage.getItem("token")?{success: true, raw_data: {username: null}}:{})
+    const lgin = props.data
     
-    const [islgin, setIslgin] = useState(window.localStorage.getItem("token")?true:false)
+    const islgin = props.islgin
 
 
-    useEffect(() => {
-        const haslgin = async() => {
-            const token = window.localStorage.getItem("token")
-            if(!token) {
-                setIslgin(false)
-                setLgin({})
-
-                return;
-            }
-
-            const fetchAccount= await fetch(urls.backend+"/api/auth/getuser", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "token": token
-                }
-            })
-
-            const data = await fetchAccount.json()
-            if(data.success) {
-                setIslgin(true)
-                setLgin(data)
-
-                return;
-            } else if(!data.success) {
-                setIslgin(false)
-                setLgin({})
-
-                return;
-            }
-        }
-
-        haslgin()
-    }, [])
+    
 
     const buffer = (element, text) => {
 

@@ -7,53 +7,15 @@ import './navbar.css'
 import getFileType from "./functions/getFileType"
 import DOMPurify from "dompurify"
 
-export default function Topics() {
+export default function Topics(props) {
 
     const {topic} = useParams()
     document.title = `Posts with #${topic} / Curiopost`
-   const [islgin, setIslgin] = useState(false)
-   const [loading, setLoading] = useState(true)
-   const [udata, setUdata] = useState({})
+const udata = props.data
    const [feeds, setFeeds] = useState([<div className="card" aria-hidden="true"><div className="card-body"> <h5 className="card-title placeholder-glow"> <span className="placeholder col-6"></span> </h5> <p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-4"></span> <span className="placeholder col-6"></span> <span className="placeholder col-8"></span> </p><p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> </p><p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> </p><p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-4"></span> <span className="placeholder col-6"></span> <span className="placeholder col-8"></span> </p><p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-4"></span> <span className="placeholder col-6"></span> <span className="placeholder col-8"></span> </p><p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-4"></span> <span className="placeholder col-6"></span> <span className="placeholder col-8"></span> </p><p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-4"></span> <span className="placeholder col-6"></span> <span className="placeholder col-8"></span> </p><p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-4"></span> <span className="placeholder col-6"></span> <span className="placeholder col-8"></span> </p><p class="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-4"></span> <span className="placeholder col-6"></span> <span className="placeholder col-8"></span> </p></div></div>])
    
 
-   useEffect(() => {
-    const getUserData = async() => {
-
-        const token = window.localStorage.getItem("token")
-        if(!token) {
-            setIslgin(false)
-            setUdata({})
-            setLoading(false)
-            return;
-        }
-
-        const getUserData = await fetch(urls.backend+"/api/auth/getuser", {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "token": token
-            }
-        })
-
-        const data = await getUserData.json()
-        if(data.success) {
-            setIslgin(true)
-            setUdata(data)
-            setLoading(false)
-            return;
-        } else {
-            setIslgin(false)
-            setUdata(data)
-            setLoading(false)
-            return;
-
-        }
-
-    }
-
-    getUserData()
-   }, [])
+   
 
    useEffect(() => {
     const setTopics = async() => {
@@ -250,12 +212,12 @@ bl.push(p)
         }
     }
 
-    if(loading === false) {
+
         setTopicResults()
         setTopics()
    
-    }
-   }, [loading])
+    
+   }, [])
 
    const buffer = (element, text) => {
 
@@ -430,7 +392,7 @@ if(!data1.success) {
 }
    
    
-   if(loading === false && islgin === true) {
+   
     
     return <div><ToastContainer/>
           <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -615,10 +577,6 @@ if(!data1.success) {
 </div>
         </div>
    
-} else if(loading === false && islgin === false) {
-    return <Navigate to="/login"/>
-   
-} else {
-    return <></>
-}
+
+
 }

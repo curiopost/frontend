@@ -1,17 +1,19 @@
 import  { Navigate } from 'react-router-dom'
+import { useState, useEffect } from "react";
 
 export default function Logout() {
 
-  const clearLocalStorage = () => {
-    return window.localStorage.clear() 
-  }
- clearLocalStorage()
+  useEffect(() => {
+
+    window.localStorage.clear()
+    return window.location.href = "/"
+  }, [])
 
 
         
         
 
- return <Navigate to='/'  />
+ return <></>
 }
 
 
