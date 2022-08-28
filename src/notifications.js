@@ -20,11 +20,24 @@ useEffect(() =>{
 
 
     const setNotifis = async() => {
+      const token = window.localStorage.getItem("token")
+      const getUpdatedUserData = await fetch(urls.backend+"/api/auth/getuser",{
+        method: 'POST',
+        headers:{
+          "Content-Type": "application/json",
+          "token": token
+        }
+      })
+
+      const gudata = await getUpdatedUserData.json()
+      if(!gudata.success) {
+        return toast.error("Could not load notifications, please reload the page!")
+      }
        
-        const notifis = udata.raw_data.notifications.sort((a,b) => (parseFloat(b.created_at) - parseFloat(a.created_at)))
-        if(notifis.length > 0) {
+        const notifis = gudata.raw_data.notifications.sort((a,b) => (parseFloat(b.created_at) - parseFloat(a.created_at)))
+     
  
-    } else {
+        if(notifis.length === 0) {
         setNotifications([])
         setNotifications(notifications => [...notifications, <div className="card">
             <div className="card-header">
@@ -40,6 +53,7 @@ useEffect(() =>{
         </div>])
         return;
     }
+    setNotifications([])
         notifis.forEach(n => {
             setNotifications(notifications => [...notifications, 
             <Link to={n.url} className="text-decoration-none" style={{"color": "inherit"}}>
@@ -62,7 +76,7 @@ useEffect(() =>{
     }
     
  
-        setNotifications([])
+      
         setNotifis()
     
 }, [])

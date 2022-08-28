@@ -275,9 +275,13 @@ if(avatarFile.files.length > 0) {
     const data = await sendBackendreq.json()
     if(data.success) {
         document.getElementById('avatar-file').value = ''
-        unbuffer(document.getElementById('avatarupdatebtn'), 'Change Avatar')
+        buffer(document.getElementById('avatarupdatebtn'), 'Avatar Changed, reloading...')
         document.getElementById('avatar-img').src= data.data.avatar_url || 'https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png'
-       return toast.success('Avatar Has been updated')
+       toast.success('Avatar Has been updated')
+       setTimeout(() => {
+        window.location.href = `/account`
+      }, 5000)
+      return;
       
     } else {
         unbuffer(document.getElementById('avatarupdatebtn'), 'Change Avatar')
@@ -315,7 +319,10 @@ if(avatarFile.files.length > 0) {
         const data = await send_request.json()
         if(data.success) {
             toast.success(data.message)
-            unbuffer(document.getElementById("savepchbtn"), "Save Changes")
+            buffer(document.getElementById("savepchbtn"), "Changes Saved, reloading...")
+            setTimeout(() => {
+              window.location.href = `/account`
+            }, 5000)
             return;
         } else {
             toast.error(data.message) 
