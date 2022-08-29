@@ -17,6 +17,7 @@ import Manage from "./manage"
 import Terms from "./terms"
 import Privacy from "./privacy"
 import NotFound from "./NotFound";
+import "./LoadingPage.css"
 
 
 
@@ -28,6 +29,7 @@ function App() {
 
    useEffect(() => { 
     const getUserData = async() => {
+        
 
         const token = window.localStorage.getItem("token")
         if(!token) {
@@ -64,7 +66,17 @@ function App() {
     getUserData()
    }, [])
 
-   if(loading === true) return <></>
+   if(loading === true) return (
+    <div className="App">
+          <header className="App-header">
+            <img src={process.env.PUBLIC_URL+"/logo.png"} height={125} width={125}></img>
+     <p>Preparing Data...</p>
+            
+          </header>
+ 
+        
+    </div>
+   )
 
 return(
     <BrowserRouter>
