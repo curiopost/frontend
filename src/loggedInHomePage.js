@@ -533,7 +533,8 @@ if(!data1.success) {
 
         </div>
       </nav>
-      <div className="topics float-end" style={{ "marginTop": "10%", "marginRight": "1%", "marginLeft": "1%", width: "20rem", "marginBottom": "1%"}}>
+    
+      <div className="topics float-end" style={{ "marginTop": "10%", "marginRight": "3%", "marginLeft": "1%", width: "20%", "marginBottom": "1%",}}>
         <div className="card" aria-hidden="true">
 
           <div className="card-body">
@@ -554,11 +555,13 @@ if(!data1.success) {
           </div>
         </div>
       </div>
+      <div className="feeds col-lg-7 offset-lg-2 container-sm" style={{ "marginTop": "10%"}}>
 
-      <div className="feeds col-lg-7 offset-lg-2" id="feeds" style={{ "marginTop": "10%" }}>
+    
 
         {feeds}
       </div>
+     
       <br /><br /><br /><br />
       <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModal" aria-hidden="true">
   <div class="modal-dialog">

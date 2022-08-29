@@ -326,10 +326,11 @@ if(!data1.success) {
   
           </div>
         </nav>  
-        <div className="feeds col-lg-6 offset-lg-3" style={{ "marginTop": "10%" }}>
+        <div className="container-sm">
+        <div className="feeds col-lg-8 offset-lg-2" style={{ "marginTop": "10%" }}>
 
       {notifications}    
-      
+      </div>
              </div>
              
       
