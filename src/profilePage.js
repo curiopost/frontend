@@ -177,7 +177,7 @@ useEffect(() => {
             
           </div>
           <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
-            {islgin && udata.raw_data.likes.includes(feed._id) ?<div>
+            {islgin && feed.users_likes.includes(udata.raw_data._id) ?<div>
  <a id={"unlikebtn"+feed._id} onClick={() => {unlike(feed._id)}} style={{"cursor": "pointer", "marginLeft": "3px", "marginRight": "5px"}}><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
 </svg></a>
