@@ -50,7 +50,7 @@ useEffect(() => {
             document.getElementById('user-av').src = data.raw_data.avatar_url || 'https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png'
 
             const sanitize_u_web = DOMPurify.sanitize(data.raw_data.website, { ALLOWED_TAGS: [] })
-            document.getElementById('user-website').innerHTML = `${data.raw_data.website ? `<a class="text-decoration-none" href=${sanitize_u_web} target="__blank">${sanitize_u_web}</a>` : "No Website."}`
+            document.getElementById('user-website').innerHTML = `${data.raw_data.website ? `<a class="text-decoration-none" href="${sanitize_u_web.startsWith('http://') || sanitize_u_web.startsWith('https://') ? sanitize_u_web : 'https://'+sanitize_u_web}" target="__blank">${sanitize_u_web}</a>` : "No Website."}`
         
         if(islgin && data.raw_data.followers.includes(udata.raw_data._id)) {
           document.getElementById('folowbtn').style.display = "none"
