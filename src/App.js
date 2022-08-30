@@ -70,7 +70,7 @@ function App() {
     <div className="App">
           <header className="App-header">
             <img src={process.env.PUBLIC_URL+"/logo.png"} height={125} width={125}></img>
-     <p>Preparing Data...</p>
+    
             
           </header>
  
