@@ -83,6 +83,10 @@ useEffect(() => {
 
 
 const setThePost = async(type1) => {
+  function textAreaAdjust(el) {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  }
 
     if(!id) {
        return setPost([<p className="text-center" style={{"marginTop": "15%"}}>Post not found...</p>])
@@ -174,44 +178,22 @@ const setThePost = async(type1) => {
                    
 
                 </div>
-                <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="replyModallabel">Add a new reply</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <div className="input-group mb-4 p-1">
-        <span className="input-group-text">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-blockquote-left" viewBox="0 0 16 16">
-  <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm5 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm-5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm.79-5.373c.112-.078.26-.17.444-.275L3.524 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282c.024-.203.065-.37.123-.498a1.38 1.38 0 0 1 .252-.37 1.94 1.94 0 0 1 .346-.298zm2.167 0c.113-.078.262-.17.445-.275L5.692 6c-.122.074-.272.17-.452.287-.18.117-.35.26-.51.428a2.425 2.425 0 0 0-.398.562c-.11.207-.164.438-.164.692 0 .36.072.65.217.873.144.219.385.328.72.328.215 0 .383-.07.504-.211a.697.697 0 0 0 .188-.463c0-.23-.07-.404-.211-.521-.137-.121-.326-.182-.568-.182h-.282a1.75 1.75 0 0 1 .118-.492c.058-.13.144-.254.257-.375a1.94 1.94 0 0 1 .346-.3z"/>
-</svg>
-        </span>
-        <textarea rows="3" class="form-control" id="reply-content" maxLength={500} placeholder="Reply content... You can use #tags for topics and @mentions to mention people."></textarea>
-        </div>
-        <div className="input-group mb-4 p-1">
-        <span className="input-group-text">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
-  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-  <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
-</svg>
-          </span>
-          <input type="file" class="form-control" id="reply-file" name="reply-file" accept="image/*, video/*" onPaste={(e) => {document.getElementById('reply-file').files = e.clipboardData.files}}/>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        
-        <button type="button" class="btn btn-success w-100"  id="replycreatebtn" onClick={createReply}>Add Reply</button>
-      </div>
-    </div>
-  </div>
-</div>
+      
 
 
-                {islgin ? 
-                <button className="btn btn-success" style={{"marginTop": "1%"}} data-bs-toggle="modal" data-bs-target="#replyModal">Add a Reply</button> : <></>
+                {islgin ? <>
+               <div className="input-group" style={{"marginTop":"10px", "marginBottom": "10px"}}>
+               <input type="file" className="input-group-text " id="reply-file" name="reply-file" accept="image/*, video/*" style={{"width": "128px"}}></input>
+                <textarea className="form-control" rows="1" placeholder="Reply Content..." id="reply-content" onKeyUp={() => {textAreaAdjust(document.getElementById('reply-content'))}}></textarea>
+           
+           
+          
+                  <button className="btn btn-primary" onClick={createReply} id="replycreatebtn">Reply</button>
+                  
+                  
+         
+          
+               </div>         </>: <></>
             }
             
                 </>])
@@ -438,7 +420,7 @@ const unbuffer = (element, text) => {
 
 const createReply = async() => {
 const token = window.localStorage.getItem("token")
-buffer(document.getElementById('replycreatebtn'), "Adding Reply...")
+buffer(document.getElementById('replycreatebtn'), "Replying...")
 let mentions = []
 let topics= []
 let file_url = null
@@ -447,7 +429,7 @@ const replyFile = document.getElementById('reply-file')
 
 if(!content) {
 
-  unbuffer(document.getElementById('replycreatebtn'), "Add Reply")
+  unbuffer(document.getElementById('replycreatebtn'), "Reply")
   return toast.error("Reply content is required!")
 }
 
@@ -464,7 +446,7 @@ if(replyFile.files.length > 0) {
   if(data.success)  {
   file_url = data.url
   } else if(!data.success){
-    unbuffer(document.getElementById('replycreatebtn'), "Add Reply")
+    unbuffer(document.getElementById('replycreatebtn'), "Reply")
     return toast.error("Unexpected error occured  on our end, please try again!")
     
   }
@@ -496,10 +478,11 @@ let r = content.split(' ')
   if(getReplyStatus.success) {
     document.getElementById('reply-content').value = ""
     document.getElementById('reply-file').value=""
-    unbuffer(document.getElementById('replycreatebtn'), "Add Reply")
+    unbuffer(document.getElementById('replycreatebtn'), "Reply")
     return toast.success("Successfully added reply!")
 
   } else {
+    unbuffer(document.getElementById('replycreatebtn'), "Reply")
     return toast.error(getReplyStatus.message)
   }
 }
