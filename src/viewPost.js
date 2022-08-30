@@ -183,10 +183,10 @@ const setThePost = async(type1) => {
 
                 {islgin ? <>
                <div className="input-group" style={{"marginTop":"10px", "marginBottom": "10px"}}>
-               <input type="file" className="input-group-text " id="reply-file" name="reply-file" accept="image/*, video/*" style={{"width": "128px"}}></input>
+               
                 <textarea className="form-control" rows="1" placeholder="Reply Content..." id="reply-content" onKeyUp={() => {textAreaAdjust(document.getElementById('reply-content'))}}></textarea>
            
-           
+           <input type="file" className="input-group-text " id="reply-file" name="reply-file" accept="image/*, video/*" style={{"width": "128px"}}></input>
           
                   <button className="btn btn-primary" onClick={createReply} id="replycreatebtn">Reply</button>
                   
