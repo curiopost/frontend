@@ -52,7 +52,7 @@ useEffect(() => {
             const sanitize_u_web = DOMPurify.sanitize(data.raw_data.website, { ALLOWED_TAGS: [] })
             document.getElementById('user-website').innerHTML = `${data.raw_data.website ? `<a class="text-decoration-none" href=${sanitize_u_web} target="__blank">${sanitize_u_web}</a>` : "No Website."}`
         
-        if(islgin && udata.raw_data.following.includes(data.raw_data._id)) {
+        if(islgin && data.raw_data.followers.includes(udata.raw_data._id)) {
           document.getElementById('folowbtn').style.display = "none"
     document.getElementById('unfollowbtn').style.display = "block" 
         }
