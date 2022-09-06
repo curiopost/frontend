@@ -572,7 +572,7 @@ if(!token) {
             src="https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"></img>
        
                 <div className="col col-lg-9">
-                    <div className="row">
+                    <div className="row overflow-hidden">
                 <h5 id="user-d-name" className="card-title" style={{"marginBottom": "5px"}}>Loading...</h5>
                 <p style={{"marginBottom": "0"}}>@{username}</p>
                 <p id="user-about" style={{"marginBottom": "0"}}><strong>Bio</strong>: <div id="user-bio" className="d-inline-block">...</div></p>
@@ -581,7 +581,7 @@ if(!token) {
                 <p style={{"marginBottom": "0"}}><strong>Total Posts</strong>: <div className="d-inline-block" id="total-posts">0</div></p>
                 <p style={{"marginBottom": "0"}}><strong>Joined</strong>: <div className="d-inline-block" id="user-joined">...</div></p>
                 <p style={{"marginBottom": "0"}}><strong>Location</strong>:  <div className="d-inline-block" id="user-location">...</div></p>
-                <p ><strong>Website</strong>:  <div className="d-inline-block" id="user-website">loading...</div></p>
+                <p ><strong>Website</strong>:  <div className="d-inline-block " id="user-website">loading...</div></p>
                 {islgin && udata.raw_data.username === username ? <Link className="btn btn-primary" to="/account" style={{"width": "fit-content", "marginLeft": "1%"}}>Edit Profile</Link> : <><button className="btn btn-primary" id="folowbtn" onClick={followUser} style={{"width": "fit-content", "marginLeft": "1%"}}>Follow</button> <button className="btn btn-primary" id="unfollowbtn" onClick={unFollowUser} style={{"width": "fit-content", "marginLeft": "1%", "display": "none"}}>Unfollow</button></>}
               
                 </div>
