@@ -169,7 +169,9 @@ bl.push(p)
               <Link to={"/u/"+feed.username} className="text-decoration-none text-dark"><img src={feed.avatar_url ? feed.avatar_url: "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"} class="rounded" alt="logo" width="25" height="25"/>
               <p className="text-muted" style={{"marginBottom": "0"}}><strong>{cleanName} (@{feed.username})</strong></p></Link>
           
-                <h5 className="card-title">{clean_feed_title} <small>({feed.type.toLowerCase()})</small></h5>
+                <h5 className="card-title">{clean_feed_title} <span className="badge rounded-pill bg-info">
+            {feed.type.toLowerCase()}
+              </span></h5>
                 <div dangerouslySetInnerHTML={{__html:content}}/>
                 
                 

@@ -55,7 +55,9 @@ export default function Search(props) {
     <div className="card-body">
     <p className="float-end text-muted">{p.created_date}</p>
     <Link to={"/u/"+p.username} className="text-decoration-none"><img src={p.avatar_url ? p.avatar_url: "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"} className="rounded float-start" width="25" height="25" style={{marginRight: "5px"}}></img><h5 className="card-title text-muted">{p.name} (@{p.username})</h5></Link>   
-    <h5 className="card-title">{p.title} <small>({p.type.toLowerCase()})</small></h5>
+    <h5 className="card-title">{p.title} <span className="badge rounded-pill bg-info">
+            {p.type.toLowerCase()}
+              </span></h5>
     <p>{p.content}</p>
     </div>
     </div>

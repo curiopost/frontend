@@ -160,13 +160,15 @@ useEffect(() => {
 
         setPosts(posts => [...posts, <div>
           <div className="card" style={{"width": "100%;"}} >
-          
+         
           <div className="card-body">
           <p className="float-end text-muted">{feed.creation_date}</p>
           <Link to={"/u/"+username} className="text-decoration-none text-dark"><img src={data.raw_data.avatar_url ? data.raw_data.avatar_url: "https://res.cloudinary.com/curiopost/image/upload/v1660395029/media/logo_yawcsx.png"} class="rounded" alt="logo" width="25" height="25"/>
           <p className="text-muted" style={{"marginBottom": "0"}}><strong>{cleanName} (@{username})</strong></p></Link>
       
-            <h5 className="card-title">{clean_feed_title} <small>({feed.type.toLowerCase()})</small></h5>
+            <h5 className="card-title">{clean_feed_title} <span className="badge rounded-pill bg-info">
+            {feed.type.toLowerCase()}
+              </span></h5>
             <div dangerouslySetInnerHTML={{__html:content}}/>
             
             
