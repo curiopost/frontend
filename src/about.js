@@ -81,7 +81,9 @@ return (
   <div className="col-sm-1">
 <h5 className="text-muted">Contact</h5>
    <a href="mailto:curiopost.live@outlook.com" className="text-decoration-none" >Email</a><br/>
-      
+  
+   <a className="text-decoration-none" href="https://bugs.curiopost.live" target={"_blank"}>Bugs</a><br/>
+   <a href="https://feedback.curiopost.live" className="text-decoration-none" target={"_blank"}>Feedback</a><br/>
   </div>
   <div className="col-sm-1 ">
 <h5 className="text-muted">Account</h5>
