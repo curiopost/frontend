@@ -18,6 +18,8 @@ import Terms from "./terms"
 import Privacy from "./privacy"
 import NotFound from "./NotFound";
 import "./LoadingPage.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -38,6 +40,7 @@ function App() {
             setLoading(false)
             return;
         }
+        try {
 
         const getUserData = await fetch(urls.backend+"/api/auth/getuser", {
             method: 'POST',
@@ -60,6 +63,10 @@ function App() {
             return;
 
         }
+    } catch(e) {
+
+        toast.error(`Could not contact the backend, please reload!`)
+    }
 
     }
 
@@ -67,7 +74,10 @@ function App() {
    }, [])
 
    if(loading === true) return (
+    <>
+      <ToastContainer/>
     <div className="App">
+      
           <header className="App-header">
             <img src={process.env.PUBLIC_URL+"/logo.png"} height={125} width={125}></img>
     
@@ -76,6 +86,7 @@ function App() {
  
         
     </div>
+    </>
    )
 
 return(
