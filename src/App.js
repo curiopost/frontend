@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import "./img.css"
 import { useState, useEffect } from "react";
 import urls from "./variables/urls"
 import About from "./about"
