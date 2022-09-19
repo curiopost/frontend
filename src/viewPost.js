@@ -137,7 +137,7 @@ const setThePost = async(type1) => {
                         <h5 className="card-title">{data.raw_data.title}</h5>
                         <div dangerouslySetInnerHTML={{__html:content2}}/>
                         {filetype === "video" ? <div className="ratio ratio-16x9">
-                        <video controls preload="metadata">
+                        <video controls preload="metadata" controlsList="nodownload">
                         <source src={data.raw_data.attachment_url} type="video/mp4"/>
                         </video>
                         </div> : <></>}
@@ -248,7 +248,7 @@ setReplies(replies => [...replies, <>
                        
                         <div dangerouslySetInnerHTML={{__html:content2}}/>
                         {filetype === "video" ? <div className="ratio ratio-16x9">
-                        <video controls preload="metadata">
+                        <video controls preload="metadata" controlsList="nodownload">
                         <source src={data.raw_data.attachment_url} type="video/mp4"/>
                         </video>
                         </div> : <></>}
@@ -349,7 +349,7 @@ const setTheReply = async() => {
       </Link>
         <h5 className="card-title">Replying to '{data.processed_data.replied_title}'</h5>
         <div dangerouslySetInnerHTML={{__html:content}}/>
-        {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata">
+        {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata" controlsList="nodownload">
               <source src={data.raw_data.attachment_url} type="video/mp4"/>
               </video></div> : <div></div>}
               {filetype === "image" ? <img src={data.raw_data.attachment_url} class="img-fluid card-image" alt="post Image"/> : <div></div>}

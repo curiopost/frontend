@@ -150,7 +150,7 @@ export default function Feeds(props) {
               <div dangerouslySetInnerHTML={{__html:content}}/>
               
               
-              {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata">
+              {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata" controlsList="nodownload">
               <source src={feed.attachment_url} type="video/mp4"/>
               </video></div> : <div></div>}
               {filetype === "image" ? <img src={feed.attachment_url} class="img-fluid card-image" alt="post Image"/> : <div></div>}
@@ -241,7 +241,7 @@ export default function Feeds(props) {
               <div dangerouslySetInnerHTML={{__html:content}}/>
               
               
-              {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata">
+              {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata" controlsList="nodownload">
               <source src={feed.attachment_url} type="video/mp4"/>
               </video></div> : <div></div>}
               {filetype === "image" ? <img src={feed.attachment_url} class="img-fluid card-image" alt="post Image"/> : <div></div>}
