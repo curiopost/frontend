@@ -154,7 +154,7 @@ export default function Feeds(props) {
               <source src={feed.attachment_url} type="video/mp4"/>
               </video></div> : <div></div>}
               <div className="text-center">
-              {filetype === "image" ? <img src={feed.attachment_url} class="img-fluid card-image rounded" alt="post Image"/> : <div></div>}
+              {filetype === "image" ? <img src={feed.attachment_url} style={{width: '100%', maxHeight: '90vh'}} class="feed-img img-fluid card-image rounded" alt="post Image"/> : <div></div>}
               </div>
             </div>
             <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
@@ -246,7 +246,7 @@ export default function Feeds(props) {
               <source src={feed.attachment_url} type="video/mp4"/>
               </video></div> : <div></div>}
               <div className="text-center">
-              {filetype === "image" ? <img src={feed.attachment_url} class="img-fluid card-image rounded" alt="post Image"/> : <div></div>}
+              {filetype === "image" ? <img src={feed.attachment_url} class="feed-img img-fluid card-image rounded" alt="post Image" style={{width: '100%', maxHeight: '90vh'}}/> : <div></div>}
               </div>
             </div>
             <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
