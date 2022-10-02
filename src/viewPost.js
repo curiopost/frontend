@@ -141,7 +141,7 @@ const setThePost = async(type1) => {
                         <source src={data.raw_data.attachment_url} type="video/mp4"/>
                         </video>
                         </div> : <></>}
-                        {filetype === "image" ? <img src={data.raw_data.attachment_url} class="img-fluid card-image" alt="post Image"/> : <></>}
+                        {filetype === "image" ? <div className="text-center"><img src={data.raw_data.attachment_url} class="img-fluid card-image rounded" alt="post Image"/></div> : <></>}
                         </div>
                         <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
                     
@@ -252,7 +252,7 @@ setReplies(replies => [...replies, <>
                         <source src={data.raw_data.attachment_url} type="video/mp4"/>
                         </video>
                         </div> : <></>}
-                        {filetype === "image" ? <img src={data.raw_data.attachment_url} class="img-fluid card-image" alt="post Image"/> : <></>}
+                        {filetype === "image" ? <div className="text-center"><img src={data.raw_data.attachment_url} class="img-fluid card-image rounded" alt="post Image"/></div> : <></>}
                         </div>
                         <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
                     
@@ -352,7 +352,7 @@ const setTheReply = async() => {
         {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata" controlsList="nodownload">
               <source src={data.raw_data.attachment_url} type="video/mp4"/>
               </video></div> : <div></div>}
-              {filetype === "image" ? <img src={data.raw_data.attachment_url} class="img-fluid card-image" alt="post Image"/> : <div></div>}
+              {filetype === "image" ? <div className="text-center"><img src={data.raw_data.attachment_url} class="img-fluid card-image rounded" alt="post Image"/></div> : <div></div>}
               
       </div>
       <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
