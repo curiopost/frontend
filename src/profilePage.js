@@ -175,7 +175,7 @@ useEffect(() => {
             {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata" controlsList="nodownload">
             <source src={feed.attachment_url} type="video/mp4"/>
             </video></div> : <div></div>}
-            {filetype === "image" ? <div className="text-center"><img src={feed.attachment_url} class="img-fluid card-image rounded" alt="post Image" style={{width: '100%', maxHeight: '90vh'}}/></div> : <div></div>}
+            {filetype === "image" ? <div className="text-center"><img src={feed.attachment_url} loading="lazy" class="img-fluid card-image rounded" alt="post Image" style={{width: '100%', maxHeight: '90vh'}}/></div> : <div></div>}
             
           </div>
           <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>

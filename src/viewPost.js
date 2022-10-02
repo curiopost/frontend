@@ -252,7 +252,7 @@ setReplies(replies => [...replies, <>
                         <source src={data.raw_data.attachment_url} type="video/mp4"/>
                         </video>
                         </div> : <></>}
-                        {filetype === "image" ? <div className="text-center"><img src={data.raw_data.attachment_url} class="img-fluid card-image rounded" style={{width: '100%', maxHeight: '90vh'}} alt="post Image"/></div> : <></>}
+                        {filetype === "image" ? <div className="text-center"><img src={data.raw_data.attachment_url} loading="lazy" class="img-fluid card-image rounded" style={{width: '100%', maxHeight: '90vh'}} alt="post Image"/></div> : <></>}
                         </div>
                         <div id="like-section" className="d-flex" style={{"cursor": "pointer", "marginLeft": "20px", "marginRight": "5px", "marginBottom": "0"}}>
                     
