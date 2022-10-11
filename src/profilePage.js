@@ -579,7 +579,7 @@ if(!token) {
                 <p style={{"marginBottom": "0"}}>@{username}</p>
                 <p id="user-about" style={{"marginBottom": "0"}}><strong>Bio</strong>: <div id="user-bio" className="d-inline-block">...</div></p>
              
-                <p style={{"marginBottom": "0"}}><strong>Followers</strong>: <div className="d-inline-block" id="follower-count">0</div> <strong>Following</strong>: <div className="d-inline-block" id="following-count">0</div></p>
+               <p style={{"marginBottom": "0"}}> <Link to={"/u/"+username+"/followers"} className="text-decoration-none text-dark"><strong>Followers</strong></Link>: <div className="d-inline-block" id="follower-count">0</div> <Link to={"/u/"+username+"/following"} className="text-decoration-none text-dark"><strong>Following</strong></Link>: <div className="d-inline-block" id="following-count">0</div></p>
                 <p style={{"marginBottom": "0"}}><strong>Total Posts</strong>: <div className="d-inline-block" id="total-posts">0</div></p>
                 <p style={{"marginBottom": "0"}}><strong>Joined</strong>: <div className="d-inline-block" id="user-joined">...</div></p>
                 <p style={{"marginBottom": "0"}}><strong>Location</strong>:  <div className="d-inline-block" id="user-location">...</div></p>

@@ -18,6 +18,8 @@ import Manage from "./manage"
 import Terms from "./terms"
 import Privacy from "./privacy"
 import NotFound from "./NotFound";
+import ViewFollowers from "./ViewFollowers";
+import ViewFollowing from "./ViewFollowing";
 import "./LoadingPage.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -107,6 +109,8 @@ return(
     <Route path="/:type/:id/manage" element={islgin ? <Manage data={udata}/> : <Navigate to="/login"/>}/>
     <Route path="/terms" element={<Terms islgin={islgin} data={udata}/>}/>
     <Route path="/privacy" element={<Privacy islgin={islgin} data={udata}/>}/>
+    <Route path="/u/:username/followers" element={<ViewFollowers islgin={islgin} data={udata}/>}/>
+    <Route path="/u/:username/following" element={<ViewFollowing islgin={islgin} data={udata}/>}/>
     <Route path="*" element={<NotFound/>}/>
     </Routes>
     </BrowserRouter>
