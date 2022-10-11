@@ -543,6 +543,13 @@ return (<div><ToastContainer/>
         </div>
         <div className="card" style={{"marginBottom": "1%"}}>
             <div className="card-body">
+                <h5 className="card-title">Update Curiopost</h5>
+                <p style={{"marginBottom": "9px"}}>Click the button below to update Curiopost to the latest version.</p>
+              <button className="btn btn-success w-100" onClick={() => {window.location.reload(true)}}>Update Curiopost</button>
+            </div>
+        </div>
+        <div className="card" style={{"marginBottom": "1%"}}>
+            <div className="card-body">
                 <h5 className="card-title">Danger Zone</h5>
                 <p style={{"marginBottom": "9px"}}>Warning: Things done here cannot be undone! Make sure you know what your doing...</p>
                 <Link className="btn btn-danger w-50" to="/logout" style={{"marginBottom": "1%"}}><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
