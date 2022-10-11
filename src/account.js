@@ -545,7 +545,7 @@ return (<div><ToastContainer/>
             <div className="card-body">
                 <h5 className="card-title">Update Curiopost</h5>
                 <p style={{"marginBottom": "9px"}}>Click the button below to update Curiopost to the latest version.</p>
-              <button className="btn btn-success w-100" onClick={() => {window.location.reload()}}>Update Now</button>
+              <button className="btn btn-success w-100" onClick={() => {window.location.reload()}}>Update Curiopost</button>
             </div>
         </div>
         <div className="card" style={{"marginBottom": "1%"}}>
