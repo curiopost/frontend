@@ -1,5 +1,6 @@
 import urls from "./variables/urls"
 import { useEffect } from "react"
+import {Link} from "react-router-dom"
 
 export default function Verify() {
 
@@ -20,7 +21,7 @@ export default function Verify() {
             const data = await getrsp.json()
 
             if(!data.success) {
-                return document.getElementById("verifystat").innerText = data.message
+                return document.getElementById("verifystat").innerHTML = "Could not verify your account. Your account is most likely already verified, you can login with your credentials you entered <a href='/login'>here</a>"
             } else {
                 window.localStorage.setItem("token", data.token)
                 return window.location.href = "/"
