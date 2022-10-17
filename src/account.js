@@ -432,8 +432,8 @@ return (<div><ToastContainer/>
 </nav>  
 
 
-
-<div className="feeds col-lg-6 offset-lg-3" style={{ "marginTop": "10%" }}>
+<div className="container-fluid">
+<div className="col-md-6 offset-md-3" style={{ "marginTop": "10%" }}>
     <div className="card" style={{"marginBottom": "1%"}}>
         <div className="card-body">
             <h5 className="card-title">Account Information</h5>
@@ -563,7 +563,7 @@ return (<div><ToastContainer/>
             </div>
         </div>
     </div>
-
+    </div>
 
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
   <div class="modal-dialog">
