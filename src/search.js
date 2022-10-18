@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react"
+import {useState, useMemo} from "react"
 import {Link} from "react-router-dom"
 import urls from "./variables/urls"
 import { ToastContainer, toast } from 'react-toastify';
@@ -17,7 +17,7 @@ export default function Search(props) {
 
  
 
-    useEffect(() => {
+    useMemo(() => {
        
         const search = async() => {
 
