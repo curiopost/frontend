@@ -21,7 +21,7 @@ export default function Verify() {
             const data = await getrsp.json()
 
             if(!data.success) {
-                return document.getElementById("verifystat").innerHTML = "Could not verify your account. Your account is most likely already verified, you can login with your credentials you entered <a href='/login'>here</a>"
+                return document.getElementById("verifystat").innerHTML = "Could not verify your account. Your account is most likely already verified, you can login with your credentials you entered <a href='/login'>here</a>. <br>You can also read our guide on how to troubleshoot this error <a href='https://common-issues.curiopost.live/' target='_blank'>here</a>"
             } else {
                 window.localStorage.setItem("token", data.token)
                 return window.location.href = "/"
