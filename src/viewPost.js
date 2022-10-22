@@ -751,7 +751,7 @@ if(type === "posts" || type === "questions" || type === "replies") {
 return (<div>
  <ToastContainer/> 
  {islgin ? 
-        <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+        <nav className="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
           <div className="container-fluid">
             <Link to="/" className="navbar-brand"><img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" width="30" height="30" className="d-inline-block align-text-top" /> Curiopost</Link>
   
@@ -817,7 +817,7 @@ return (<div>
             </div>
   
           </div>
-        </nav> : <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+        </nav> : <nav className="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
         <div className="container-fluid">
             <Link to="/" className="navbar-brand"><img src={process.env.PUBLIC_URL+"/logo.png"} alt="logo" width="30" height="30" className="d-inline-block align-text-top"/> Curiopost</Link>
 

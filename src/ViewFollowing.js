@@ -223,7 +223,7 @@ setFollowewingF()
     return (<>
         <ToastContainer />
 
-        {islgin ? <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+        {islgin ? <nav className="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
             <div className="container-fluid">
                 <Link to="/" className="navbar-brand"><img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" width="30" height="30" className="d-inline-block align-text-top" /> Curiopost</Link>
 
@@ -289,7 +289,7 @@ setFollowewingF()
                 </div>
 
             </div>
-        </nav> : <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+        </nav> : <nav className="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
             <div className="container-fluid">
                 <Link to="/" className="navbar-brand"><img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" width="30" height="30" className="d-inline-block align-text-top" /> Curiopost</Link>
 
