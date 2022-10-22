@@ -23,8 +23,37 @@ export default function Feeds(props) {
 
   document.title = `Curiopost (@${props.data.raw_data.username})`
 
-  
+  const [suggestedAccounts, setSuggestedAccounts] = useState([<> <p className="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-8"></span> </p><p className="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-8"></span> </p><p className="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-8"></span> </p><p className="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-8"></span> </p><p className="card-text placeholder-glow"> <span className="placeholder col-7"></span> <span className="placeholder col-4"></span> <span className="placeholder col-8"></span> </p></>])
+useEffect(() => {
+  const token = window.localStorage.getItem('token')
+  const setSAccounts = async() => {
+    const submR = await fetch(urls.backend+`/api/read/suggested_accounts`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'token': token
+      }
+    })
 
+    const data = await submR.json()
+setSuggestedAccounts([])
+    data.suggestions.forEach(s => {
+      setSuggestedAccounts(suggestedAccounts => [...suggestedAccounts, <>
+      <Link  className="text-decoration-none" to={"/u/"+s.username}>
+      <div className="card border-0">
+        <div className="card-body d-flex">
+        <img class="rounded" height="50" width="50" src={s.avatar_url ? s.avatar_url : "https://curiopost.live/logo.png"}/>
+          <h5 className="card-title text-muted" style={{"marginTop": "10px", "marginLeft": "5px"}}>{s.name}</h5>
+       
+        </div>
+      </div>
+      </Link>
+      </>])
+    })
+  }
+
+  setSAccounts()
+}, [])
   useEffect(() => {
  
     const like = async(id) => {
@@ -482,7 +511,7 @@ if(!data1.success) {
     <div>
     <ToastContainer/>
    
-      <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+      <nav className="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand"><img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" width="30" height="30" className="d-inline-block align-text-top" /> Curiopost</Link>
 
@@ -550,8 +579,8 @@ if(!data1.success) {
         </div>
       </nav>
     
-      <div className="topics float-end" style={{ "marginTop": "10%", "marginRight": "3%", "marginLeft": "1%", width: "20%", "marginBottom": "1%",}}>
-        <div className="card" aria-hidden="true">
+      <div className="topics float-end " style={{ "position": "sticky","top":"10%","marginTop": "10%", "marginRight": "3%", "marginLeft": "1%", width: "20%", "marginBottom": "1%",}}>
+        <div className="card " aria-hidden="true">
 
           <div className="card-body">
             <h5 className="card-title placeholder-glow">
@@ -567,11 +596,58 @@ if(!data1.success) {
               <span className="placeholder col-6"></span>
               <span className="placeholder col-8"></span>
             </p>
+            <p className="card-text placeholder-glow">
+              <span className="placeholder col-7"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-6"></span>
+              <span className="placeholder col-8"></span>
+            </p>
+            <p className="card-text placeholder-glow">
+              <span className="placeholder col-7"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-6"></span>
+              <span className="placeholder col-8"></span>
+            </p>
+            <p className="card-text placeholder-glow">
+              <span className="placeholder col-7"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-6"></span>
+              <span className="placeholder col-8"></span>
+            </p>
+            <p className="card-text placeholder-glow">
+              <span className="placeholder col-7"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-6"></span>
+              <span className="placeholder col-8"></span>
+            </p>
+            <p className="card-text placeholder-glow">
+              <span className="placeholder col-7"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-4"></span>
+              <span className="placeholder col-6"></span>
+              <span className="placeholder col-8"></span>
+            </p>
             </div>
           </div>
         </div>
       </div>
-      <div className="feeds col-lg-7 offset-lg-2 container-sm" style={{ "marginTop": "10%"}}>
+
+      <div className="suggested_accounts float-start " style={{ "position": "sticky","top":"10%", "marginTop": "10%","marginLeft": "3%","marginRight": "3%", width: "20%"}}>
+      <div className="card" aria-hidden="true">
+      <div className="card-body">
+        <h5 className="card-text">Suggested Accounts</h5>
+       
+              {suggestedAccounts}
+         
+           
+        </div>
+      </div>
+      </div>
+      <div className="feeds col-lg-6 offset-lg-3 container-sm " style={{ "marginTop": "10%", }}>
 
     
 
