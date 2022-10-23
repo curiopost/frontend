@@ -1,5 +1,5 @@
 const  urls = {
-    backend: 'https://backend.curiopost.live',
+    backend: 'http://localhost:6060',
     cdn: 'https://cdn.curiopost.live'
 }
 

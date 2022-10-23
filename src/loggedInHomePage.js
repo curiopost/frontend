@@ -579,7 +579,7 @@ if(!data1.success) {
         </div>
       </nav>
     
-      <div className="topics float-end " style={{ "position": "sticky","top":"10%","marginTop": "10%", "marginRight": "3%", "marginLeft": "1%", width: "20%", "marginBottom": "1%",}}>
+      <div className="topics float-end " style={{ "position": "sticky","top":"-5%","marginTop": "10%", "marginRight": "3%", "marginLeft": "1%", width: "20%", "marginBottom": "1%",}}>
         <div className="card " aria-hidden="true">
 
           <div className="card-body">
@@ -636,7 +636,7 @@ if(!data1.success) {
         </div>
       </div>
 
-      <div className="suggested_accounts float-start " style={{ "position": "sticky","top":"10%", "marginTop": "10%","marginLeft": "3%","marginRight": "3%", width: "20%"}}>
+      <div className="suggested_accounts float-start " style={{ "position": "sticky","top":"-5%", "marginTop": "10%","marginLeft": "3%","marginRight": "3%", width: "20%"}}>
       <div className="card" aria-hidden="true">
       <div className="card-body">
         <h5 className="card-text">Suggested Accounts</h5>
