@@ -32,6 +32,7 @@
 
 .bg-dark .modal-body {
     background-color: #2f3136 !important;
+    color: white;
 }
 
 .bg-dark .modal-header {
