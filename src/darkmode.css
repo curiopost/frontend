@@ -1,12 +1,12 @@
 .bg-dark .card{
-    background-color: black !important;
+    background-color: #19191d !important;
 }
 .bg-dark .list-group{
-    background-color: black !important;  
+    background-color: #19191d !important;  
 }
 .bg-dark .list-group-item{
    color: white !important;   
-   background-color: black !important;  
+   background-color: #19191d !important;  
 }
 
 
@@ -44,11 +44,11 @@
     background-color: #2f3136 !important;     
 }
 .bg-dark input:not(.avatar-file){
-    background-color: black !important;    
+    background-color: #19191d !important;    
     color: white !important;    
 }
 .bg-dark textarea {
-    background-color: black !important;    
+    background-color: #19191d !important;    
     color: white !important;    
 }
 .bg-dark ::placeholder {
@@ -56,8 +56,13 @@
 }
 
 .bg-dark .navbar-dark {
-    background-color: black !important;
+    background-color: #19191d !important;
 }
 .bg-dark .input-group-text {
-    color: black !important;
+    color: #19191d !important;
 }
+
+
+
+
+
