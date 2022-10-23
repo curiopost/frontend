@@ -360,7 +360,23 @@ if(avatarFile.files.length > 0) {
             return window.location.href = "/"
         }
     }
+const changeTheme =() => {
+  let currentTheme = window.localStorage.getItem("theme")
+  if(!currentTheme) currentTheme = "light"
+  if(currentTheme === "dark") {
+    window.localStorage.setItem("theme", "light")
+    document.body.classList.remove('bg-dark')
+    document.body.classList.remove('text-light')
+    document.getElementById('theme-txt').innerText = `Click to change you theme, your current theme is light`
+  } else {
+    window.localStorage.setItem("theme", "dark")
+    document.body.classList.toggle('bg-dark')
+    document.body.classList.toggle('text-light')
+    document.getElementById('theme-txt').innerText = `Click to change you theme, your current theme is dark`
+  }
+ 
 
+}
 
 return (<div><ToastContainer/>
 <nav className="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
@@ -474,6 +490,13 @@ return (<div><ToastContainer/>
       </div>
       <button className="btn btn-success w-100" id="changepwbtn" onClick={changePw}>Change Password</button>
         </div>
+    </div>
+    <div className="card" style={{"marginBottom": "1%"}}>
+      <div className="card-body">
+      <h5 className="card-title">Curiopost Theme <span class="badge rounded-pill bg-info">Beta</span></h5>
+      <p className="card-text" id="theme-txt">Click to change you theme, your current theme is {window.localStorage.getItem("theme")}</p> 
+      <button className="btn btn-success w-100" onClick={changeTheme}>Click to Change</button>
+      </div>
     </div>
     <div className="card" style={{"marginBottom": "1%"}}>
         <div className="card-body">

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./img.css"
 import "./body.css"
+import "./darkmode.css"
 import { useState, useEffect } from "react";
 import urls from "./variables/urls"
 import About from "./about"
@@ -34,6 +35,7 @@ function App() {
    const [udata, setUdata] = useState({})
 
    useEffect(() => { 
+  
     const getUserData = async() => {
         
 
@@ -45,6 +47,13 @@ function App() {
             return;
         }
         try {
+            let theme = window.localStorage.getItem("theme");
+            if(!theme) theme = "light"
+            if(theme === "dark") {
+                document.body.classList.toggle("bg-dark")
+                document.body.classList.toggle("text-light")
+                
+            }
 
         const getUserData = await fetch(urls.backend+"/api/auth/getuser", {
             method: 'POST',
@@ -59,8 +68,15 @@ function App() {
             setIslgin(true)
             setUdata(data)
             setLoading(false)
+          
             return;
         } else {
+
+            if(theme === "dark") {
+                document.body.classList.remove("bg-dark")
+                document.body.classList.remove("text-light")
+                
+            }
             setIslgin(false)
             setUdata(data)
             setLoading(false)

@@ -1,3 +1,8 @@
 body {
     font-family: 'Roboto', sans-serif !important;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
 }
+::-webkit-scrollbar {
+    display: none;
+  }

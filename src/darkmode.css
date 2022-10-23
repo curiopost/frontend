@@ -1,0 +1,62 @@
+.bg-dark .card{
+    background-color: black !important;
+}
+.bg-dark .list-group{
+    background-color: black !important;  
+}
+.bg-dark .list-group-item{
+   color: white !important;   
+   background-color: black !important;  
+}
+
+
+.bg-dark nav {
+    background-color: #2f3136 !important;
+}
+
+.bg-dark strong {
+    color: white; 
+}
+
+.bg-dark .bi-chat-dots-fill {
+    fill: blue !important;
+
+}
+.bg-dark .modal {
+    color: #2f3136 !important;  
+}
+
+.bg-dark .text-muted{
+    color: #e8eaed !important;
+}
+
+.bg-dark .modal-body {
+    background-color: #2f3136 !important;
+}
+
+.bg-dark .modal-header {
+    background-color: #2f3136 !important;  
+    color: white;
+}
+
+.bg-dark .modal-footer {
+    background-color: #2f3136 !important;     
+}
+.bg-dark input:not(.avatar-file){
+    background-color: black !important;    
+    color: white !important;    
+}
+.bg-dark textarea {
+    background-color: black !important;    
+    color: white !important;    
+}
+.bg-dark ::placeholder {
+    color: #727272 !important;      
+}
+
+.bg-dark .navbar-dark {
+    background-color: black !important;
+}
+.bg-dark .input-group-text {
+    color: black !important;
+}
