@@ -61,7 +61,9 @@
 .bg-dark .input-group-text {
     color: #19191d !important;
 }
-
+.bg-dark .text-dark {
+    color: #e8eaed !important; 
+}
 
 
 
