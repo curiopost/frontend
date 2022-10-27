@@ -494,7 +494,7 @@ return (<div><ToastContainer/>
     <div className="card" style={{"marginBottom": "1%"}}>
       <div className="card-body">
       <h5 className="card-title">Curiopost Theme <span class="badge rounded-pill bg-info">Beta</span></h5>
-      <p className="card-text" id="theme-txt">Click to change you theme, your current theme is {window.localStorage.getItem("theme")}</p> 
+      <p className="card-text" id="theme-txt">Click to change you theme, your current theme is {window.localStorage.getItem("theme") ? window.localStorage.getItem("theme"): "light"} </p> 
       <button className="btn btn-success w-100" onClick={changeTheme}>Click to Change</button>
       </div>
     </div>
