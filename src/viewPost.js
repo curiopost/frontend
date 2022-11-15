@@ -139,10 +139,10 @@ const setThePost = async(type1) => {
                         <div dangerouslySetInnerHTML={{__html:content2}}/>
                         {filetype === "video" ? <div className="ratio ratio-16x9">
                         
-                       <iframe src={`https://player.cloudinary.com/embed/?public_id=${data.raw_data.attachment_url}&cloud_name=curiopost&AutoplayMode=on-scroll`}
-                       allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-                       allowFullScreen
-                       frameBorder="0"
+                       <iframe src={`https://player.cloudinary.com/embed/?public_id=${data.raw_data.attachment_url}&cloud_name=curiopost&player[autoplayMode]=on-scroll&player[autoplay]=true&player[posterOptions][transformation][startOffset]=1&player[seekThumbnails]=true&player[logoOnclickUrl]=https%3A%2F%2Fcuriopost.live%2F&player[logoImageUrl]=https%3A%2F%2Fres.cloudinary.com%2Fdemo%2Fimage%2Ffetch%2Fh_25%2Fhttps%3A%2F%2Fcuriopost.live%2Flogo.png&player[colors][accent]=%23fe3333&source[sourceTypes][0]=mp4`}
+                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                        allowfullscreen
+                        frameborder="0"
                        >
 
                        </iframe>
@@ -254,7 +254,7 @@ setReplies(replies => [...replies, <>
                        
                         <div dangerouslySetInnerHTML={{__html:content2}}/>
                         {filetype === "video" ? <div className="ratio ratio-16x9">
-                        <iframe src={`https://player.cloudinary.com/embed/?public_id=${data.raw_data.attachment_url}&cloud_name=curiopost`}
+                        <iframe src={`https://player.cloudinary.com/embed/?public_id=${data.raw_data.attachment_url}&cloud_name=curiopost&player[posterOptions][transformation][startOffset]=1&player[seekThumbnails]=true&player[logoOnclickUrl]=https%3A%2F%2Fcuriopost.live%2F&player[logoImageUrl]=https%3A%2F%2Fres.cloudinary.com%2Fdemo%2Fimage%2Ffetch%2Fh_25%2Fhttps%3A%2F%2Fcuriopost.live%2Flogo.png&player[colors][accent]=%23fe3333&source[sourceTypes][0]=mp4`}
                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                        allowFullScreen
                        frameBorder="0"
@@ -359,7 +359,7 @@ const setTheReply = async() => {
       </Link>
         <h5 className="card-title">Replying to '{data.processed_data.replied_title}'</h5>
         <div dangerouslySetInnerHTML={{__html:content}}/>
-        {filetype === "video" ? <div className="ratio ratio-16x9"> <iframe src={`https://player.cloudinary.com/embed/?public_id=${data.raw_data.attachment_url}&cloud_name=curiopost&AutoplayMode=on-scroll`}
+        {filetype === "video" ? <div className="ratio ratio-16x9"> <iframe src={`https://player.cloudinary.com/embed/?public_id=${data.raw_data.attachment_url}&cloud_name=curiopost&player[autoplayMode]=on-scroll&player[autoplay]=true&player[posterOptions][transformation][startOffset]=1&player[seekThumbnails]=true&player[logoOnclickUrl]=https%3A%2F%2Fcuriopost.live%2F&player[logoImageUrl]=https%3A%2F%2Fres.cloudinary.com%2Fdemo%2Fimage%2Ffetch%2Fh_25%2Fhttps%3A%2F%2Fcuriopost.live%2Flogo.png&player[colors][accent]=%23fe3333&source[sourceTypes][0]=mp4`}
                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                        allowFullScreen
                        frameBorder="0"
@@ -545,7 +545,7 @@ let r = content.split(' ')
                            
                             <div dangerouslySetInnerHTML={{__html:content2}}/>
                             {filetype === "video" ? <div className="ratio ratio-16x9">
-                            <iframe src={`https://player.cloudinary.com/embed/?public_id=${data.raw_data.attachment_url}&cloud_name=curiopost`}
+                            <iframe src={`https://player.cloudinary.com/embed/?public_id=${data.raw_data.attachment_url}&cloud_name=curiopost&player[posterOptions][transformation][startOffset]=1&player[seekThumbnails]=true&player[logoOnclickUrl]=https%3A%2F%2Fcuriopost.live%2F&player[logoImageUrl]=https%3A%2F%2Fres.cloudinary.com%2Fdemo%2Fimage%2Ffetch%2Fh_25%2Fhttps%3A%2F%2Fcuriopost.live%2Flogo.png&player[colors][accent]=%23fe3333&source[sourceTypes][0]=mp4`}
                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                        allowFullScreen
                        frameBorder="0"
