@@ -204,9 +204,13 @@ bl.push(p)
                 <div dangerouslySetInnerHTML={{__html:content}}/>
                 
                 
-                {filetype === "video" ? <div className="ratio ratio-16x9"><video controls preload="metadata" controlsList="nodownload">
-                <source src={feed.attachment_url} type="video/mp4"/>
-                </video></div> : <div></div>}
+                {filetype === "video" ? <div className="ratio ratio-16x9"> <iframe src={`https://player.cloudinary.com/embed/?public_id=${feed.attachment_url}&cloud_name=curiopost`}
+                       allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                       allowFullScreen
+                       frameBorder="0"
+                       >
+
+                       </iframe></div> : <div></div>}
                 {filetype === "image" ? <div className="text-center"><img src={feed.attachment_url} loading="lazy" class="img-fluid card-image rounded" alt="post Image" style={{width: '100%', maxHeight: '90vh'}}/></div> : <div></div>}
                 
               </div>
