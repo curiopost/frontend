@@ -139,9 +139,9 @@ required
 <p className="text-danger" id="bot-fail" style={{"marginBottom": "0%"}}></p>
             <button className=" btn btn-success w-100 text-center" id="loginbtn" style={{"marginBottom": "2%", marginTop: "2%"}} >Login</button>      
             </form>
-       {/* soonTM <div className="text-center"style={{"marginBottom": "2%", }}>
+     <div className="text-center"style={{"marginBottom": "2%", }}>
             <Link to="/reset_password" className="text-center text-success text-decoration-none" >Forgot your password?</Link>
-                </div>*/}
+                </div>
             </div>
             
             <div className="text-center">

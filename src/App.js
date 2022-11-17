@@ -22,6 +22,7 @@ import Privacy from "./privacy"
 import NotFound from "./NotFound";
 import ViewFollowers from "./ViewFollowers";
 import ViewFollowing from "./ViewFollowing";
+import ResetPassword from "./resetPassword";
 import "./LoadingPage.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -128,6 +129,7 @@ return(
     <Route path="/privacy" element={<Privacy islgin={islgin} data={udata}/>}/>
     <Route path="/u/:username/followers" element={<ViewFollowers islgin={islgin} data={udata}/>}/>
     <Route path="/u/:username/following" element={<ViewFollowing islgin={islgin} data={udata}/>}/>
+    <Route path="/reset_password" element={islgin ? <Navigate to="/"/> : <ResetPassword/>}></Route>
     <Route path="*" element={<NotFound/>}/>
     </Routes>
     </BrowserRouter>
